@@ -1,0 +1,6 @@
+@GeoMottuMinimalApi_HostAddress = http://localhost:5279
+
+GET {{GeoMottuMinimalApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
