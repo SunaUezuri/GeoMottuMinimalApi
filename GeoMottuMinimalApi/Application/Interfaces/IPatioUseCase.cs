@@ -5,10 +5,10 @@ namespace GeoMottuMinimalApi.Application.Interfaces
 {
     public interface IPatioUseCase
     {
-        Task<PageResultModel<IEnumerable<PatioEntity>>> GetAllPatiosAsync(int offSet = 0, int take = 3);
-        Task<PatioEntity?> GetPatioByIdAsync(int id);
-        Task<PatioEntity?> CreatePatioAsync(PatioDto patio);
-        Task<PatioEntity?> UpdatePatioAsync(int id, PatioDto patio);
-        Task<PatioEntity?> DeletePatioAsync(int id);
+        Task<OperationResult<PageResultModel<IEnumerable<PatioEntity>>>> GetAllPatiosAsync(int offSet = 0, int take = 3);
+        Task<OperationResult<PatioEntity?>> GetPatioByIdAsync(int id);
+        Task<OperationResult<PatioEntity?>> CreatePatioAsync(PatioDto patio);
+        Task<OperationResult<PatioEntity?>> UpdatePatioAsync(int id, PatioDto patio);
+        Task<OperationResult<PatioEntity?>> DeletePatioAsync(int id);
     }
 }

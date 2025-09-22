@@ -1,3 +1,5 @@
+using GeoMottuMinimalApi.Application.Interfaces;
+using GeoMottuMinimalApi.Application.UseCases;
 using GeoMottuMinimalApi.Domain.Interfaces;
 using GeoMottuMinimalApi.Infrastructure.Data.AppDatas;
 using GeoMottuMinimalApi.Infrastructure.Data.Repositories;
@@ -14,11 +16,17 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("Oracle"));
 });
 
-// Serviços da aplicação
+// Repositórios da aplicação
 builder.Services.AddTransient<IMotoRepository, MotoRepository>();
 builder.Services.AddTransient<IPatioRepository, PatioRepository>();
 builder.Services.AddTransient<IFilialRepository, FilialRepository>();
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+
+// UseCases da aplicação
+builder.Services.AddTransient<IMotoUseCase, MotoUseCase>();
+builder.Services.AddTransient<IPatioUseCase, PatioUseCase>();
+builder.Services.AddTransient<IFilialUseCase, FilialUseCase>();
+builder.Services.AddTransient<IUsuarioUseCase, UsuarioUseCase>();
 
 builder.Services.AddControllers();
 
