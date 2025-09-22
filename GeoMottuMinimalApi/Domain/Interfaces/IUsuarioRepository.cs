@@ -1,0 +1,14 @@
+﻿using GeoMottuMinimalApi.Domain.Entities;
+
+namespace GeoMottuMinimalApi.Domain.Interfaces
+{
+    public interface IUsuarioRepository
+    {
+        Task<PageResultModel<IEnumerable<UsuarioEntity>>> GetAllUsuariosAsync(int offSet, int take);
+        Task<UsuarioEntity?> GetUsuarioByIdAsync(int id);
+        Task<UsuarioEntity?> GetUsuarioByEmailAsync(string email);
+        Task<UsuarioEntity> CreateUsuarioAsync(UsuarioEntity usuario);
+        Task<UsuarioEntity?> UpdateUsuarioAsync(int id, UsuarioEntity usuario);
+        Task<UsuarioEntity?> DeleteUsuarioAsync(int id);
+    }
+}
