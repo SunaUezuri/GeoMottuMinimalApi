@@ -1,4 +1,6 @@
+using GeoMottuMinimalApi.Domain.Interfaces;
 using GeoMottuMinimalApi.Infrastructure.Data.AppDatas;
+using GeoMottuMinimalApi.Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +14,11 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("Oracle"));
 });
 
-
+// Serviços da aplicação
+builder.Services.AddTransient<IMotoRepository, MotoRepository>();
+builder.Services.AddTransient<IPatioRepository, PatioRepository>();
+builder.Services.AddTransient<IFilialRepository, FilialRepository>();
+builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 
 builder.Services.AddControllers();
 
@@ -25,7 +31,7 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
 
 builder.Services.AddRateLimiter(options => {
-    options.AddFixedWindowLimiter(policyName: "ratelimetePolicy", opt => {
+    options.AddFixedWindowLimiter(policyName: "ratelimit", opt => {
         opt.PermitLimit = 20;
         opt.Window = TimeSpan.FromSeconds(60);
         opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
