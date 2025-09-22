@@ -11,7 +11,7 @@ namespace GeoMottuMinimalApi.Domain.Interfaces
         Task<MotoEntity?> GetByChassiAsync(string chassi);
         Task<MotoEntity?> GetByPlacaAsync(string placa);
 
-        Task<MotoEntity> CreateMotoAsync(MotoEntity moto);
+        Task<MotoEntity?> CreateMotoAsync(MotoEntity moto);
         Task<MotoEntity?> UpdateMotoAsync(int id, MotoEntity moto);
         Task<MotoEntity?> DeleteMotoAsync(int id);
 
