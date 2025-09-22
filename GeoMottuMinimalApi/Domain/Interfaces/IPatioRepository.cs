@@ -4,7 +4,7 @@ namespace GeoMottuMinimalApi.Domain.Interfaces
 {
     public interface IPatioRepository
     {
-        Task<PageResultModel<IEnumerable<PatioEntity>>> GetAllPatiosAsync(int offSet, int take);
+        Task<PageResultModel<IEnumerable<PatioEntity>>> GetAllPatiosAsync(int offSet = 0, int take = 3);
         Task<int> GetCurrentMotoCountAsync(int patioId);
         Task<PatioEntity?> GetPatioByIdAsync(int id);
         Task<PatioEntity?> CreatePatioAsync(PatioEntity patio);

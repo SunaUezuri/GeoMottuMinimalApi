@@ -1,9 +1,10 @@
-﻿using GeoMottuMinimalApi.Domain.Entities;
+﻿using GeoMottuMinimalApi.Application.Dtos;
+using GeoMottuMinimalApi.Domain.Entities;
 using GeoMottuMinimalApi.Domain.Enums;
 
-namespace GeoMottuMinimalApi.Domain.Interfaces
+namespace GeoMottuMinimalApi.Application.Interfaces
 {
-    public interface IMotoRepository
+    public interface IMotoUseCase
     {
         Task<PageResultModel<IEnumerable<MotoEntity>>> GetAllMotosAsync(int offSet = 0, int take = 3);
         Task<PageResultModel<IEnumerable<MotoEntity>>> GetByModeloAsync(ModeloMoto modelo, int offSet = 0, int take = 0);
@@ -11,9 +12,8 @@ namespace GeoMottuMinimalApi.Domain.Interfaces
         Task<MotoEntity?> GetByChassiAsync(string chassi);
         Task<MotoEntity?> GetByPlacaAsync(string placa);
 
-        Task<MotoEntity?> CreateMotoAsync(MotoEntity moto);
-        Task<MotoEntity?> UpdateMotoAsync(int id, MotoEntity moto);
+        Task<MotoEntity?> CreateMotoAsync(MotoDto moto);
+        Task<MotoEntity?> UpdateMotoAsync(int id, MotoDto moto);
         Task<MotoEntity?> DeleteMotoAsync(int id);
-
     }
 }
