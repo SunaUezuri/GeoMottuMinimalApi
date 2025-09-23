@@ -1,6 +1,7 @@
 ﻿using GeoMottuMinimalApi.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GeoMottuMinimalApi.Domain.Entities
 {
@@ -26,6 +27,7 @@ namespace GeoMottuMinimalApi.Domain.Entities
         public ICollection<MotoEntity>? Motos { get; set; }
         public int FilialId { get; set; }
         [ForeignKey("FilialId")]
+        [JsonIgnore]
         public virtual FilialEntity Filial { get; set; }
 
 

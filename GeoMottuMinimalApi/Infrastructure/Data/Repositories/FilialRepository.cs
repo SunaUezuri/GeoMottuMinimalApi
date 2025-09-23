@@ -43,7 +43,8 @@ namespace GeoMottuMinimalApi.Infrastructure.Data.Repositories
             var result = await _context
                 .Filial
                 .Include(u => u.Usuarios)
-                .OrderBy(p => p.Patios)
+                .Include(p => p.Patios)
+                .OrderBy(f => f.Id)
                 .Skip(offSet)
                 .Take(take)
                 .ToListAsync();

@@ -84,7 +84,19 @@ namespace GeoMottuMinimalApi.Application.UseCases
 
         public async Task<OperationResult<MotoEntity?>> GetByChassiAsync(string chassi)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _repository.GetByChassiAsync(chassi);
+                if(result is null)
+                {
+                    return OperationResult<MotoEntity?>.Failure("Moto não encontrada", (int)HttpStatusCode.NotFound);
+                }
+
+                return OperationResult<MotoEntity?>.Success(result);
+            } catch(Exception)
+            {
+                return OperationResult<MotoEntity?>.Failure("Ocorreu um erro ao buscar a moto pelo chassi");
+            }
         }
 
         public async Task<OperationResult<PageResultModel<IEnumerable<MotoEntity>>>> GetByModeloAsync(ModeloMoto modelo, int offSet = 0, int take = 0)

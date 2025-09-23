@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace GeoMottuMinimalApi.Domain.Entities
 {
@@ -44,6 +45,7 @@ namespace GeoMottuMinimalApi.Domain.Entities
 
         public int PatioId { get; set; }
         [ForeignKey("PatioId")]
+        [JsonIgnore]
         public virtual PatioEntity? Patio { get; set; }
 
         public DateTime CriadoEm { get; set; } = DateTime.Now;
