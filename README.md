@@ -41,6 +41,7 @@
 6.  [**🐳 Docker**](#-docker)
 7.  [**🚀 Como Executar**](#-como-executar)
 8. [**📖 Guia da API**](#-guia-da-api)
+9. [**🔗Deploy No Render**](#-deploy-no-render)
 
 
 ---
@@ -275,3 +276,7 @@ A documentação interativa no Swagger é a fonte da verdade para todos os endpo
 | `DELETE`|`/api/usuario/{id}`    | Deleta um usuário.             |
 
 ---
+
+## 🔗Deploy no Render
+
+[![Deploy Online](https://img.shields.io/badge/🌍%20Abrir%20Aplicação-000?style=for-the-badge&logo=vercel)](https://geomottuminimalapi.onrender.com)  
