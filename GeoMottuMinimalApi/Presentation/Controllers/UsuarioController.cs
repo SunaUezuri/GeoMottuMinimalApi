@@ -124,7 +124,7 @@ namespace GeoMottuMinimalApi.Presentation.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id}")]
         [SwaggerOperation(Summary = "Atualiza um usuário existente")]
         [SwaggerRequestExample(typeof(UsuarioDto), typeof(UsuarioRequestSample))]
         [SwaggerResponse(statusCode: 200, description: "Usuário atualizado com sucesso")]

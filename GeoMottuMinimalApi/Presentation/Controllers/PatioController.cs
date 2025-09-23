@@ -134,7 +134,7 @@ namespace GeoMottuMinimalApi.Presentation.Controllers
             return StatusCode(result.StatusCode, result.Value);
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("{id}")]
         [SwaggerOperation(
             Summary = "Exclui um pátio",
             Description = "Remove um pátio do sistema pelo seu ID."
