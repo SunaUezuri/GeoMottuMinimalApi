@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="URL_PARA_UM_LOGO_DA_MOTTU_OU_DO_PROJETO" alt="Logo do Projeto" width="150"/>
   <h1 align="center">GeoMottu API</h1>
   <p align="center">
     <strong>API de Gerenciamento de Frotas e Geolocalização para a Mottu</strong>
