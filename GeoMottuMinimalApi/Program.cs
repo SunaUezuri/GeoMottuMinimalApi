@@ -13,23 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
 {
-    // Pega a base da connection string do appsettings.json
-    var connectionStringBase = builder.Configuration.GetConnectionString("Oracle");
-
-    // Pega o usuário e a senha das variáveis de ambiente
-    var dbUser = builder.Configuration["DB_USER"];
-    var dbPassword = builder.Configuration["DB_PASSWORD"];
-
-    // Validação: Garante que as variáveis foram fornecidas
-    if (string.IsNullOrEmpty(dbUser) || string.IsNullOrEmpty(dbPassword))
-    {
-        throw new InvalidOperationException("As variáveis de ambiente DB_USER e DB_PASSWORD não foram configuradas.");
-    }
-
-    // Monta a connection string final e segura
-    var finalConnectionString = $"{connectionStringBase}User Id={dbUser};Password={dbPassword};";
-
-    options.UseOracle(finalConnectionString);
+    options.UseOracle(builder.Configuration.GetConnectionString("Oracle"));
 });
 
 // Repositórios da aplicação
