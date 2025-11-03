@@ -1,35 +1,14 @@
-using GeoMottuMinimalApi.Application.Interfaces;
-using GeoMottuMinimalApi.Application.UseCases;
-using GeoMottuMinimalApi.Domain.Interfaces;
-using GeoMottuMinimalApi.Infrastructure.Data.AppDatas;
-using GeoMottuMinimalApi.Infrastructure.Data.Repositories;
+using GeoMottuMinimalApi.Infra.IoC;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Filters;
 using System.Threading.RateLimiting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationContext>(options =>
-{
-    options.UseOracle(builder.Configuration.GetConnectionString("Oracle"));
-});
-
-// Repositórios da aplicação
-builder.Services.AddTransient<IMotoRepository, MotoRepository>();
-builder.Services.AddTransient<IPatioRepository, PatioRepository>();
-builder.Services.AddTransient<IFilialRepository, FilialRepository>();
-builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
-
-// UseCases da aplicação
-builder.Services.AddTransient<IMotoUseCase, MotoUseCase>();
-builder.Services.AddTransient<IPatioUseCase, PatioUseCase>();
-builder.Services.AddTransient<IFilialUseCase, FilialUseCase>();
-builder.Services.AddTransient<IUsuarioUseCase, UsuarioUseCase>();
+Bootstrap.AddIoC(builder.Services, builder.Configuration);
 
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -65,11 +44,7 @@ builder.Services.Configure<GzipCompressionProviderOptions>(options =>
     options.Level = System.IO.Compression.CompressionLevel.Fastest;
 });
 
-
-
 var app = builder.Build();
-
-ApplyMigrations(app);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -88,23 +63,3 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-
-void ApplyMigrations(IHost app)
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-
-        // Verifica se existem migrations pendentes e as aplica
-        if (dbContext.Database.GetPendingMigrations().Any())
-        {
-            Console.WriteLine("Aplicando migrations pendentes...");
-            dbContext.Database.Migrate();
-            Console.WriteLine("Migrations aplicadas com sucesso.");
-        }
-        else
-        {
-            Console.WriteLine("Banco de dados já está atualizado.");
-        }
-    }
-}
