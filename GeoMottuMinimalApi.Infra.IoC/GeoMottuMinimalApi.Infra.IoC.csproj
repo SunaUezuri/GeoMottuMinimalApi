@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.Oracle" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GeoMottuMinimalApi.Application\GeoMottuMinimalApi.Application.csproj" />
     <ProjectReference Include="..\GeoMottuMinimalApi.Domain\GeoMottuMinimalApi.Domain.csproj" />
     <ProjectReference Include="..\GeoMottuMinimalApi.Infra.Data\GeoMottuMinimalApi.Infra.Data.csproj" />

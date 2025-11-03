@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.Filters;
 
-namespace GeoMottuMinimalApi.Presentation.Controllers
+namespace GeoMottuMinimalApi.Controllers
 {
     [Route("api/filial")]
     [ApiController]

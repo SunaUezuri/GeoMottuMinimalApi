@@ -1,0 +1,62 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+
+namespace GeoMottuMinimalApi.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class HealthController : ControllerBase
+    {
+        private readonly HealthCheckService _healthService;
+
+        public HealthController(HealthCheckService healthService)
+        {
+            _healthService = healthService;
+        }
+
+        [HttpGet("live")]
+        public async Task<IActionResult> Live(CancellationToken ct)
+        {
+            var report = await _healthService.CheckHealthAsync(
+                r => r.Tags.Contains("live"), ct);
+
+            var result = new
+            {
+                status = report.Status.ToString(),
+                checks = report.Entries.Select(e => new
+                {
+                    name = e.Key,
+                    status = e.Value.ToString(),
+                    description = e.Value.Description,
+                    error = e.Value.Exception?.Message
+                })
+            };
+
+            return report.Status == HealthStatus.Healthy
+                ? Ok(result)
+                : StatusCode(503, result);
+        }
+
+        [HttpGet("ready")]
+        public async Task<IActionResult> Ready(CancellationToken ct)
+        {
+            var report = await _healthService.CheckHealthAsync(
+                r => r.Tags.Contains("ready"), ct);
+
+            var result = new
+            {
+                status = report.Status.ToString(),
+                checks = report.Entries.Select(e => new
+                {
+                    name = e.Key,
+                    status = e.Value.ToString(),
+                    description = e.Value.Description,
+                    error = e.Value.Exception?.Message
+                })
+            };
+            return report.Status == HealthStatus.Healthy
+                ? Ok(result)
+                : StatusCode(503, result);
+        }
+    }
+}

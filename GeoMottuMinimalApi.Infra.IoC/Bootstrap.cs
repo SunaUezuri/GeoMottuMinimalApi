@@ -3,9 +3,11 @@ using GeoMottuMinimalApi.Application.UseCases;
 using GeoMottuMinimalApi.Domain.Interfaces;
 using GeoMottuMinimalApi.Infrastructure.Data.AppDatas;
 using GeoMottuMinimalApi.Infrastructure.Data.Repositories;
+using HealthChecks.Oracle;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace GeoMottuMinimalApi.Infra.IoC
 {
@@ -17,6 +19,14 @@ namespace GeoMottuMinimalApi.Infra.IoC
             {
                 options.UseOracle(configuration.GetConnectionString("Oracle"));
             });
+
+            services.AddHealthChecks()
+                .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "live" })
+                .AddOracle(
+                        connectionString: configuration.GetConnectionString("Oracle"),
+                        name: "oracle_query",
+                        tags: new[] { "ready" }
+                    );
 
             // Repositórios da aplicação
             services.AddTransient<IMotoRepository, MotoRepository>();
