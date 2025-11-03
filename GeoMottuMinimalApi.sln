@@ -1,9 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36121.58 d17.14
+VisualStudioVersion = 17.14.36121.58
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoMottuMinimalApi", "GeoMottuMinimalApi\GeoMottuMinimalApi.csproj", "{0811DDE8-8F87-4DCC-AC10-B1A496D318BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{8B846376-372D-4DAF-9745-C178BD8386F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{BADA0C25-F4C4-4385-8F13-9ED88FE51BB9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{DCDA917A-444B-42AD-B9CB-43818224AFC3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E261881A-FA40-44C7-A5B3-AA4F672773C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoMottuMinimalApi.Domain", "GeoMottuMinimalApi.Domain\GeoMottuMinimalApi.Domain.csproj", "{15EBB2B5-B6DA-485B-AA1A-E1D73E0672BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,9 +27,17 @@ Global
 		{0811DDE8-8F87-4DCC-AC10-B1A496D318BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0811DDE8-8F87-4DCC-AC10-B1A496D318BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0811DDE8-8F87-4DCC-AC10-B1A496D318BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15EBB2B5-B6DA-485B-AA1A-E1D73E0672BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15EBB2B5-B6DA-485B-AA1A-E1D73E0672BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15EBB2B5-B6DA-485B-AA1A-E1D73E0672BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15EBB2B5-B6DA-485B-AA1A-E1D73E0672BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0811DDE8-8F87-4DCC-AC10-B1A496D318BF} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{15EBB2B5-B6DA-485B-AA1A-E1D73E0672BF} = {BADA0C25-F4C4-4385-8F13-9ED88FE51BB9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {91FFA4A2-AAD9-49A1-B9D6-CA594AED7F77}

@@ -18,4 +18,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="6.1.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\GeoMottuMinimalApi.Domain\GeoMottuMinimalApi.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
