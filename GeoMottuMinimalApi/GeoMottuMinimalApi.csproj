@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GeoMottuMinimalApi.Application\GeoMottuMinimalApi.Application.csproj" />
     <ProjectReference Include="..\GeoMottuMinimalApi.Domain\GeoMottuMinimalApi.Domain.csproj" />
   </ItemGroup>
 
