@@ -56,7 +56,9 @@ namespace GeoMottuMinimalApi.Controllers
                     {
                         new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = moto.Id }, Request.Scheme) },
                         new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = moto.Id }, Request.Scheme) },
-                        new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = moto.Id }, Request.Scheme) }
+                        new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = moto.Id }, Request.Scheme) },
+                        new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = moto.Placa }, Request.Scheme) },
+                        new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = moto.Chassi }, Request.Scheme) }
                     }
                 }),
                 links = new object[]
