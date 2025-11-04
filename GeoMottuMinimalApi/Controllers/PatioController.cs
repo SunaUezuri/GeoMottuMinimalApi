@@ -9,7 +9,7 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace GeoMottuMinimalApi.Controllers
 {
-    [Route("api/patio")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PatioController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace GeoMottuMinimalApi.Controllers
             _patioUseCase = patioUseCase;
         }
 
-        [HttpGet]
+        [HttpGet("list")]
         [SwaggerOperation(
             Summary = "Lista todos os pátios de forma paginada",
             Description = "Retorna uma lista paginada de pátios com links HATEOAS."
@@ -71,7 +71,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, hateoas);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("list/{id}")]
         [SwaggerOperation(
             Summary = "Obtém um pátio por ID",
             Description = "Retorna o pátio correspondente ao ID informado."
@@ -92,7 +92,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, result.Value);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [SwaggerOperation(
             Summary = "Cria um novo pátio",
             Description = "Cadastra um novo pátio no sistema."
@@ -113,7 +113,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         [SwaggerOperation(
             Summary = "Atualiza um pátio existente",
             Description = "Altera os dados de um pátio pelo seu ID."
@@ -134,7 +134,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, result.Value);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         [SwaggerOperation(
             Summary = "Exclui um pátio",
             Description = "Remove um pátio do sistema pelo seu ID."

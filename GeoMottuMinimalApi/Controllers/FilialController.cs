@@ -9,7 +9,7 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace GeoMottuMinimalApi.Controllers
 {
-    [Route("api/filial")]
+    [Route("api/[controller]")]
     [ApiController]
     public class FilialController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace GeoMottuMinimalApi.Controllers
             _filialUseCase = filialUseCase;
         }
 
-        [HttpGet]
+        [HttpGet("list")]
         [SwaggerOperation(
             Summary = "Lista todas as filiais de forma paginada",
             Description = "Retorna uma lista paginada de filiais com links HATEOAS."
@@ -70,7 +70,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, hateoas);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("list/{id}")]
         [SwaggerOperation(
             Summary = "Obtém uma filial por ID",
             Description = "Retorna a filial correspondente ao ID informado."
@@ -91,7 +91,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, result.Value);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [SwaggerOperation(
             Summary = "Cria uma nova filial",
             Description = "Cadastra uma nova filial no sistema."
@@ -112,7 +112,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         [SwaggerOperation(
             Summary = "Atualiza uma filial existente",
             Description = "Altera os dados de uma filial pelo seu ID."
@@ -133,7 +133,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, result.Value);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         [SwaggerOperation(
             Summary = "Exclui uma filial",
             Description = "Remove uma filial do sistema pelo seu ID."

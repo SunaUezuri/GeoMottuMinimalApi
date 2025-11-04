@@ -10,7 +10,7 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace GeoMottuMinimalApi.Controllers
 {
-    [Route("api/moto")]
+    [Route("api/[controller]")]
     [ApiController]
     public class MotoController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace GeoMottuMinimalApi.Controllers
             _motoUseCase = motoUseCase;
         }
 
-        [HttpGet]
+        [HttpGet("list")]
         [SwaggerOperation(
             Summary = "Lista todas as motos de forma paginada",
             Description = "Retorna uma lista paginada de motos com links HATEOAS."
@@ -75,7 +75,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, hateoas);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("list/{id}")]
         [SwaggerOperation(
             Summary = "Obtém uma moto por ID",
             Description = "Retorna a moto correspondente ao ID informado."
@@ -187,7 +187,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, hateoas);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [SwaggerOperation(
             Summary = "Cria uma nova moto",
             Description = "Cadastra uma nova moto no sistema."
@@ -209,7 +209,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         [SwaggerOperation(
             Summary = "Atualiza uma moto existente",
             Description = "Altera os dados de uma moto pelo seu ID."
@@ -230,7 +230,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, result.Value);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         [SwaggerOperation(
             Summary = "Exclui uma moto",
             Description = "Remove uma moto do sistema pelo seu ID."

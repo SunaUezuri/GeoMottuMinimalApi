@@ -8,7 +8,7 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace GeoMottuMinimalApi.Controllers
 {
-    [Route("api/usuario")]
+    [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace GeoMottuMinimalApi.Controllers
             _usuarioUseCase = usuarioUseCase;
         }
 
-        [HttpGet]
+        [HttpGet("list")]
         [SwaggerOperation(
             Summary = "Lista todos os usuários de forma paginada",
             Description = "Retorna uma lista paginada de usuários com links HATEOAS."
@@ -70,7 +70,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, hateoas);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("list/{id}")]
         [SwaggerOperation(Summary = "Obtém um usuário por ID")]
         [SwaggerResponse(statusCode: 200, description: "Usuário encontrado")]
         [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
@@ -106,7 +106,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [SwaggerOperation(Summary = "Cria um novo usuário")]
         [SwaggerRequestExample(typeof(UsuarioDto), typeof(UsuarioRequestSample))]
         [SwaggerResponse(statusCode: 201, description: "Usuário criado com sucesso")]
@@ -124,7 +124,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("update/{id}")]
         [SwaggerOperation(Summary = "Atualiza um usuário existente")]
         [SwaggerRequestExample(typeof(UsuarioDto), typeof(UsuarioRequestSample))]
         [SwaggerResponse(statusCode: 200, description: "Usuário atualizado com sucesso")]
@@ -142,7 +142,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete/{id}")]
         [SwaggerOperation(Summary = "Exclui um usuário")]
         [SwaggerResponse(statusCode: 200, description: "Usuário excluído com sucesso")]
         [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
