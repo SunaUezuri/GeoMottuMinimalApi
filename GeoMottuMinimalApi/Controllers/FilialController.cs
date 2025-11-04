@@ -28,6 +28,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Lista de filiais retornada com sucesso")]
         [SwaggerResponse(statusCode: 204, description: "Nenhuma filial encontrada")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(FilialResponseListSample))]
         [EnableRateLimiting("ratelimit")]
         [Authorize(Roles = "USER, ADMIN")]
@@ -79,6 +80,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Filial encontrada", type: typeof(FilialEntity))]
         [SwaggerResponse(statusCode: 404, description: "Filial não encontrada")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(FilialResponseSample))]
         [EnableRateLimiting("ratelimit")]
         [Authorize(Roles = "USER, ADMIN")]
@@ -91,7 +93,20 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result.Value);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+                {
+                    new { rel = "update", href = Url.Action(nameof(Put), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Filial", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Filial", null, Request.Scheme) }
+                }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpPost("create")]
@@ -102,6 +117,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerRequestExample(typeof(FilialDto), typeof(FilialRequestSample))]
         [SwaggerResponse(statusCode: 201, description: "Filial criada com sucesso", type: typeof(FilialEntity))]
         [SwaggerResponse(statusCode: 400, description: "Dados inválidos")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 201, typeof(FilialResponseSample))]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Post(FilialDto filialDto)
@@ -113,7 +129,20 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+    {
+                    new { rel = "update", href = Url.Action(nameof(Put), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Filial", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Filial", null, Request.Scheme) }
+    }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpPut("update/{id}")]
@@ -124,6 +153,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerRequestExample(typeof(FilialDto), typeof(FilialRequestSample))]
         [SwaggerResponse(statusCode: 200, description: "Filial atualizada com sucesso", type: typeof(FilialEntity))]
         [SwaggerResponse(statusCode: 404, description: "Filial não encontrada")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(FilialResponseSample))]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Put(int id, [FromBody] FilialDto filialDto)
@@ -135,7 +165,20 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result.Value);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+{
+                    new { rel = "update", href = Url.Action(nameof(Put), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Filial", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Filial", null, Request.Scheme) }
+}
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpDelete("delete/{id}")]
@@ -145,6 +188,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Filial excluída com sucesso", type: typeof(FilialEntity))]
         [SwaggerResponse(statusCode: 404, description: "Filial não encontrada")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(FilialResponseSample))]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(int id)
@@ -156,7 +200,20 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result.Value);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+{
+                    new { rel = "update", href = Url.Action(nameof(Put), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Filial", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Filial", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Filial", null, Request.Scheme) }
+}
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
     }
 }

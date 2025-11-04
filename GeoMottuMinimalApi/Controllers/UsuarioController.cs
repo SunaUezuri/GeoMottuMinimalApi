@@ -33,6 +33,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Lista de usuários retornada com sucesso")]
         [SwaggerResponse(statusCode: 204, description: "Nenhum usuário encontrado")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseListSample))]
         [EnableRateLimiting("ratelimit")]
         [AllowAnonymous]
@@ -66,7 +67,8 @@ namespace GeoMottuMinimalApi.Controllers
                 links = new object[]
                 {
                     new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
-                    new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) }
+                    new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
+                    new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
                 },
                 pagination = new
                 {
@@ -83,6 +85,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerOperation(Summary = "Obtém um usuário por ID", Description = "Busca um usuário no banco de dados a partir do ID")]
         [SwaggerResponse(statusCode: 200, description: "Usuário encontrado")]
         [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
         [EnableRateLimiting("ratelimit")]
         [Authorize(Roles = "ADMIN")]
@@ -95,13 +98,28 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+                {
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
+                    new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
+                },
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpGet("email/{email}")]
         [SwaggerOperation(Summary = "Obtém um usuário por E-mail", Description = "Busca um usuário levando em conta o Email dele")]
         [SwaggerResponse(statusCode: 200, description: "Usuário encontrado")]
         [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
         [EnableRateLimiting("ratelimit")]
         [Authorize(Roles = "ADMIN")]
@@ -114,7 +132,21 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+                {
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
+                    new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
+                },
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpPost("create")]
@@ -122,6 +154,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerRequestExample(typeof(UsuarioDto), typeof(UsuarioRequestSample))]
         [SwaggerResponse(statusCode: 201, description: "Usuário criado com sucesso")]
         [SwaggerResponse(statusCode: 400, description: "Dados inválidos")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 201, typeof(UsuarioResponseSample))]
         [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] UsuarioDto usuarioDto)
@@ -132,6 +165,20 @@ namespace GeoMottuMinimalApi.Controllers
             {
                 return StatusCode(result.StatusCode, result.Error);
             }
+
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+                {
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
+                    new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
+                },
+            };
 
             return StatusCode(result.StatusCode, result);
         }
@@ -150,6 +197,20 @@ namespace GeoMottuMinimalApi.Controllers
             {
                 return StatusCode(result.StatusCode, result.Error);
             }
+
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+                {
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
+                    new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
+                },
+            };
 
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -172,7 +233,7 @@ namespace GeoMottuMinimalApi.Controllers
             return StatusCode(result.StatusCode, new
             {
                 Token = tokenHandler.WriteToken(token),
-                User = result.Value
+                User = hateoas
             });
         }
 
@@ -181,6 +242,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerRequestExample(typeof(UsuarioDto), typeof(UsuarioRequestUpdateSample))]
         [SwaggerResponse(statusCode: 200, description: "Usuário atualizado com sucesso")]
         [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Put(int id, [FromBody] UsuarioUpdateDto usuarioDto)
@@ -192,13 +254,28 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+                {
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
+                    new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
+                },
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpDelete("delete/{id}")]
         [SwaggerOperation(Summary = "Exclui um usuário")]
         [SwaggerResponse(statusCode: 200, description: "Usuário excluído com sucesso")]
         [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(int id)
@@ -210,7 +287,21 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+                {
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
+                    new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
+                },
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
     }
 }

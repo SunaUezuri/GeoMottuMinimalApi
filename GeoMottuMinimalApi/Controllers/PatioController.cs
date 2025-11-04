@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.Filters;
+using System.IO;
 
 namespace GeoMottuMinimalApi.Controllers
 {
@@ -28,6 +29,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Lista de pátios retornada com sucesso")]
         [SwaggerResponse(statusCode: 204, description: "Nenhum pátio encontrado")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(PatioResponseListSample))]
         [EnableRateLimiting("ratelimit")]
         [Authorize(Roles = "USER, ADMIN")]
@@ -80,6 +82,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Pátio encontrado", type: typeof(PatioEntity))]
         [SwaggerResponse(statusCode: 404, description: "Pátio não encontrado")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(PatioResponseSample))]
         [EnableRateLimiting("ratelimit")]
         [Authorize(Roles = "USER, ADMIN")]
@@ -92,7 +95,20 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result.Value);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+                {
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "update", href = Url.Action(nameof(Put), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Patio", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Patio", null, Request.Scheme) }
+                }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpPost("create")]
@@ -103,6 +119,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerRequestExample(typeof(PatioDto), typeof(PatioRequestSample))]
         [SwaggerResponse(statusCode: 201, description: "Pátio criado com sucesso", type: typeof(PatioEntity))]
         [SwaggerResponse(statusCode: 400, description: "Dados inválidos")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 201, typeof(PatioResponseSample))]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Post([FromBody] PatioDto patioDto)
@@ -114,7 +131,20 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+    {
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "update", href = Url.Action(nameof(Put), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Patio", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Patio", null, Request.Scheme) }
+    }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpPut("update/{id}")]
@@ -125,6 +155,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerRequestExample(typeof(PatioDto), typeof(PatioRequestSample))]
         [SwaggerResponse(statusCode: 200, description: "Pátio atualizado com sucesso", type: typeof(PatioEntity))]
         [SwaggerResponse(statusCode: 404, description: "Pátio não encontrado")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(PatioResponseSample))]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Put(int id, [FromBody] PatioDto patioDto)
@@ -136,7 +167,20 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result.Value);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+    {
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "update", href = Url.Action(nameof(Put), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Patio", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Patio", null, Request.Scheme) }
+    }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpDelete("delete/{id}")]
@@ -146,6 +190,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Pátio excluído com sucesso", type: typeof(PatioEntity))]
         [SwaggerResponse(statusCode: 404, description: "Pátio não encontrado")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(PatioResponseSample))]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(int id)
@@ -157,7 +202,20 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result.Value);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+    {
+                    new { rel = "self", href = Url.Action(nameof(GetById), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "update", href = Url.Action(nameof(Put), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "delete", href = Url.Action(nameof(Delete), "Patio", new { id = result.Value?.Id }, Request.Scheme) },
+                    new { rel = "self", href = Url.Action(nameof(Get), "Patio", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Patio", null, Request.Scheme) }
+    }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
     }
 }

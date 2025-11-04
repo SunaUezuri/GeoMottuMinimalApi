@@ -29,6 +29,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Lista de motos retornada com sucesso")]
         [SwaggerResponse(statusCode: 204, description: "Nenhuma moto encontrada")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseListSample))]
         [EnableRateLimiting("ratelimit")]
         [Authorize(Roles = "USER, ADMIN")]
@@ -60,7 +61,8 @@ namespace GeoMottuMinimalApi.Controllers
                         new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = moto.Id }, Request.Scheme) },
                         new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = moto.Id }, Request.Scheme) },
                         new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = moto.Placa }, Request.Scheme) },
-                        new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = moto.Chassi }, Request.Scheme) }
+                        new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = moto.Chassi }, Request.Scheme) },
+                        new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = moto.Modelo }, Request.Scheme) }
                     }
                 }),
                 links = new object[]
@@ -86,6 +88,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Moto encontrada", type: typeof(MotoEntity))]
         [SwaggerResponse(statusCode: 404, description: "Moto não encontrada")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseSample))]
         [EnableRateLimiting("ratelimit")]
         [Authorize(Roles = "USER, ADMIN")]
@@ -98,7 +101,23 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result.Value);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+                {
+                   new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
+                   new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
+                }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpGet("placa/{placa}")]
@@ -108,6 +127,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Moto encontrada", type: typeof(MotoEntity))]
         [SwaggerResponse(statusCode: 404, description: "Moto não encontrada")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseSample))]
         [EnableRateLimiting("ratelimit")]
         [Authorize(Roles = "USER, ADMIN")]
@@ -120,7 +140,23 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result.Value);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+    {
+                   new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
+                   new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
+    }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpGet("chassi/{chassi}")]
@@ -130,6 +166,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Moto encontrada", type: typeof(MotoEntity))]
         [SwaggerResponse(statusCode: 404, description: "Moto não encontrada")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseSample))]
         [EnableRateLimiting("ratelimit")]
         [Authorize(Roles = "USER, ADMIN")]
@@ -142,7 +179,23 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result.Value);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+    {
+                   new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
+                   new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
+    }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpGet("modelo/{modelo}")]
@@ -152,6 +205,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Lista de motos retornada com sucesso")]
         [SwaggerResponse(statusCode: 204, description: "Nenhuma moto encontrada para o modelo")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseListSample))]
         [EnableRateLimiting("ratelimit")]
         [Authorize(Roles = "USER, ADMIN")]
@@ -172,18 +226,26 @@ namespace GeoMottuMinimalApi.Controllers
                     moto.Placa,
                     moto.Chassi,
                     moto.Modelo,
+                    moto.CodPlacaIot,
+                    moto.Motor,
                     moto.Proprietario,
+                    moto.PosicaoX,
+                    moto.PosicaoY,
                     links = new object[]
                     {
                         new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = moto.Id }, Request.Scheme) },
                         new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = moto.Id }, Request.Scheme) },
-                        new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = moto.Id }, Request.Scheme) }
+                        new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = moto.Id }, Request.Scheme) },
+                        new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = moto.Placa }, Request.Scheme) },
+                        new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = moto.Chassi }, Request.Scheme) },
+                        new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = moto.Modelo }, Request.Scheme) }
                     }
                 }),
                 links = new object[]
-                {
-                     new { rel = "self", href = Url.Action(nameof(GetByModelo), "Moto", new { modelo }, Request.Scheme) }
-                },
+    {
+                    new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
+                    new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
+    },
                 pagination = new
                 {
                     result.Value.Offset,
@@ -204,6 +266,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 201, description: "Moto criada com sucesso", type: typeof(MotoEntity))]
         [SwaggerResponse(statusCode: 400, description: "Dados inválidos ou pátio lotado")]
         [SwaggerResponse(statusCode: 404, description: "Pátio não encontrado")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 201, typeof(MotoResponseSample))]
         [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> Post(MotoDto motoDto)
@@ -215,7 +278,23 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+    {
+                   new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
+                   new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
+    }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpPut("update/{id}")]
@@ -226,6 +305,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerRequestExample(typeof(MotoDto), typeof(MotoRequestSample))]
         [SwaggerResponse(statusCode: 200, description: "Moto atualizada com sucesso", type: typeof(MotoEntity))]
         [SwaggerResponse(statusCode: 404, description: "Moto ou Pátio não encontrado")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseSample))]
         [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> Put(int id, MotoDto motoDto)
@@ -237,7 +317,23 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result.Value);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+    {
+                   new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
+                   new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
+    }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpDelete("delete/{id}")]
@@ -247,6 +343,7 @@ namespace GeoMottuMinimalApi.Controllers
         )]
         [SwaggerResponse(statusCode: 200, description: "Moto excluída com sucesso", type: typeof(MotoEntity))]
         [SwaggerResponse(statusCode: 404, description: "Moto não encontrada")]
+        [SwaggerResponse(statusCode: 401, description: "Ação não permitida")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseSample))]
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(int id)
@@ -258,7 +355,23 @@ namespace GeoMottuMinimalApi.Controllers
                 return StatusCode(result.StatusCode, result.Error);
             }
 
-            return StatusCode(result.StatusCode, result.Value);
+            var hateoas = new
+            {
+                data = result.Value,
+                links = new object[]
+    {
+                   new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
+                   new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
+                   new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
+    }
+            };
+
+            return StatusCode(result.StatusCode, hateoas);
         }
     }
 }
