@@ -11,5 +11,6 @@ namespace GeoMottuMinimalApi.Application.Interfaces
         Task<OperationResult<UsuarioEntity?>> CreateUsuarioAsync(UsuarioDto usuario);
         Task<OperationResult<UsuarioEntity?>> UpdateUsuarioAsync(int id, UsuarioUpdateDto usuario);
         Task<OperationResult<UsuarioEntity?>> DeleteUsuarioAsync(int id);
+        Task<OperationResult<UsuarioEntity?>> AutenticarUserAsync(AuthUserDto dto);
     }
 }

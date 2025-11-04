@@ -1,4 +1,5 @@
 ﻿using GeoMottuMinimalApi.Domain.Entities;
+using GeoMottuMinimalApi.Domain.Errors;
 using GeoMottuMinimalApi.Domain.Interfaces;
 using GeoMottuMinimalApi.Infrastructure.Data.AppDatas;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,20 @@ namespace GeoMottuMinimalApi.Infrastructure.Data.Repositories
         {
             _context = context;
         }
+
+        public async Task<UsuarioEntity?> AutenticarAsync(string email, string senha)
+        {
+            var userAuth = await _context.Usuario
+                .FirstOrDefaultAsync(u => u.Email == email && u.Senha == senha);
+
+            if (userAuth is null)
+            {
+                throw new NoContentException("Usuário não encontrado");   
+            }
+
+            return userAuth;
+        }
+
         public async Task<UsuarioEntity?> CreateUsuarioAsync(UsuarioEntity usuario)
         {
            _context.Usuario.Add(usuario);

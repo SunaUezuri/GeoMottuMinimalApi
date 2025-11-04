@@ -16,6 +16,20 @@ namespace GeoMottuMinimalApi.Application.UseCases
             _repository = repository;
         }
 
+        public async Task<OperationResult<UsuarioEntity?>> AutenticarUserAsync(AuthUserDto dto)
+        {
+            try
+            {
+                var userAuth = await _repository.AutenticarAsync(dto.email, dto.senha);
+
+                return OperationResult<UsuarioEntity?>.Success(userAuth);
+            }
+            catch
+            {
+                return OperationResult<UsuarioEntity?>.Failure("Ocorreu um erro ao buscar o cliente");
+            }
+        }
+
         public async Task<OperationResult<UsuarioEntity?>> CreateUsuarioAsync(UsuarioDto usuario)
         {
             try

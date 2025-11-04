@@ -3,8 +3,12 @@ using GeoMottuMinimalApi.Application.Interfaces;
 using GeoMottuMinimalApi.Doc.Samples.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.Filters;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace GeoMottuMinimalApi.Controllers
 {
@@ -13,10 +17,12 @@ namespace GeoMottuMinimalApi.Controllers
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioUseCase _usuarioUseCase;
+        private readonly IConfiguration _configuration;
 
-        public UsuarioController(IUsuarioUseCase usuarioUseCase)
+        public UsuarioController(IUsuarioUseCase usuarioUseCase, IConfiguration configuration)
         {
             _usuarioUseCase = usuarioUseCase;
+            _configuration = configuration;
         }
 
         [HttpGet("list")]
@@ -122,6 +128,46 @@ namespace GeoMottuMinimalApi.Controllers
             }
 
             return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost("auth")]
+        [SwaggerOperation(Summary = "Autenticação de Usuário", Description = "Método para autenticação e criação de Token JWT")]
+        // [SwaggerRequestExample(typeof(UsuarioDto), typeof(UsuarioRequestSample))]
+        [SwaggerResponse(statusCode: 201, description: "Autenticado com sucesso")]
+        [SwaggerResponse(statusCode: 400, description: "Dados inválidos")]
+        // [SwaggerResponseExample(statusCode: 201, typeof(UsuarioResponseSample))]
+        public async Task<IActionResult> Auth(AuthUserDto dto)
+        {
+            var result = await _usuarioUseCase.AutenticarUserAsync(dto);
+
+            if (!result.IsSuccess)
+            {
+                return StatusCode(result.StatusCode, result.Error);
+            }
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var key = Encoding.ASCII.GetBytes(_configuration["SecretKey"]!.ToString());
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Expires = DateTime.UtcNow.AddHours(8),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, result.Value!.Nome.ToString()),
+                    new Claim(ClaimTypes.Email, result.Value!.Email.ToString()),
+                    new Claim(ClaimTypes.Role, result.Value!.Role.ToString())
+                })
+            };
+
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+
+            return StatusCode(result.StatusCode, new
+            {
+                Token = tokenHandler.WriteToken(token),
+                User = result.Value
+            });
         }
 
         [HttpPut("update/{id}")]
