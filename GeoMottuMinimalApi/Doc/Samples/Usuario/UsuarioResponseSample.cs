@@ -14,6 +14,7 @@ namespace GeoMottuMinimalApi.Doc.Samples.Usuario
                 Email = "fernanda.lima@geomottu.com",
                 Senha = "@Senha5687",
                 FilialId = 1,
+                Role = "ADMIN",
                 CadastradoEm = DateTime.Now.AddDays(-10)
             };
         }

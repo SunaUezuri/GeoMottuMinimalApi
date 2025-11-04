@@ -15,5 +15,17 @@ namespace GeoMottuMinimalApi.Application.Mappers
                 FilialId = dto.FilialId
             };
         }
+
+        public static UsuarioEntity toUsuarioUpdateEntity(this UsuarioUpdateDto dto)
+        {
+            return new UsuarioEntity
+            {
+                Nome = dto.Nome,
+                Email = dto.Email,
+                Senha = dto.Senha,
+                Role = dto.Role,
+                FilialId = dto.FilialId
+            };
+        }
     }
 }

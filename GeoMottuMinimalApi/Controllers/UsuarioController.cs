@@ -126,11 +126,11 @@ namespace GeoMottuMinimalApi.Controllers
 
         [HttpPut("update/{id}")]
         [SwaggerOperation(Summary = "Atualiza um usuário existente")]
-        [SwaggerRequestExample(typeof(UsuarioDto), typeof(UsuarioRequestSample))]
+        [SwaggerRequestExample(typeof(UsuarioDto), typeof(UsuarioRequestUpdateSample))]
         [SwaggerResponse(statusCode: 200, description: "Usuário atualizado com sucesso")]
         [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
         [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
-        public async Task<IActionResult> Put(int id, [FromBody] UsuarioDto usuarioDto)
+        public async Task<IActionResult> Put(int id, [FromBody] UsuarioUpdateDto usuarioDto)
         {
             var result = await _usuarioUseCase.UpdateUsuarioAsync(id, usuarioDto);
 

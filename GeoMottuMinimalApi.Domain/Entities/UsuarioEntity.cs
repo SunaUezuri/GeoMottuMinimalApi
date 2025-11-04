@@ -28,6 +28,11 @@ namespace GeoMottuMinimalApi.Domain.Entities
         [Required]
         [Column("SENHA_FUNCIONARIO")]
         public string Senha { get; set; }
+
+        [Required]
+        [Column("ROLE_FUNCIONARIO")]
+        public string Role { get; set; } = "USER";
+
         public int FilialId { get; set; }
         [ForeignKey("FilialId")]
         [JsonIgnore]

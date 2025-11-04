@@ -16,6 +16,7 @@ namespace GeoMottuMinimalApi.Doc.Samples.Usuario
                     Email = "fernanda.lima@geomottu.com",
                     Senha = "$SenhaSuper957",
                     FilialId = 1,
+                    Role = "ADMIN",
                     CadastradoEm = DateTime.Now.AddDays(-10)
                 },
                 new UsuarioEntity
@@ -25,6 +26,7 @@ namespace GeoMottuMinimalApi.Doc.Samples.Usuario
                     Email = "ricardo.alves@geomottu.com",
                     Senha = "SenhaSuperSegura654",
                     FilialId = 2,
+                    Role = "USER",
                     CadastradoEm = DateTime.Now.AddDays(-5)
                 }
             };

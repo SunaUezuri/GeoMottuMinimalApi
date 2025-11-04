@@ -94,11 +94,11 @@ namespace GeoMottuMinimalApi.Application.UseCases
             }
         }
 
-        public async Task<OperationResult<UsuarioEntity?>> UpdateUsuarioAsync(int id, UsuarioDto usuario)
+        public async Task<OperationResult<UsuarioEntity?>> UpdateUsuarioAsync(int id, UsuarioUpdateDto usuario)
         {
             try
             {
-                var result = await _repository.UpdateUsuarioAsync(id, usuario.ToUsuarioEntity());
+                var result = await _repository.UpdateUsuarioAsync(id, usuario.toUsuarioUpdateEntity());
                 if (result is null)
                 {
                     return OperationResult<UsuarioEntity?>.Failure("Usuário não encontrado", (int)HttpStatusCode.NotFound);

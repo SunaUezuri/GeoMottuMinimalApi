@@ -79,6 +79,7 @@ namespace GeoMottuMinimalApi.Infrastructure.Data.Repositories
                 result.Nome = usuario.Nome;
                 result.Email = usuario.Email;
                 result.Senha = usuario.Senha;
+                result.Role = usuario.Role;
                 result.FilialId = usuario.FilialId;
 
                 _context.Usuario.Update(result);
