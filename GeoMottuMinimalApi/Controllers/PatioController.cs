@@ -2,6 +2,7 @@
 using GeoMottuMinimalApi.Application.Interfaces;
 using GeoMottuMinimalApi.Doc.Samples.Patio;
 using GeoMottuMinimalApi.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Swashbuckle.AspNetCore.Annotations;
@@ -29,6 +30,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 204, description: "Nenhum pátio encontrado")]
         [SwaggerResponseExample(statusCode: 200, typeof(PatioResponseListSample))]
         [EnableRateLimiting("ratelimit")]
+        [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> Get(int offSet = 0, int take = 3)
         {
             var result = await _patioUseCase.GetAllPatiosAsync(offSet, take);
@@ -80,6 +82,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 404, description: "Pátio não encontrado")]
         [SwaggerResponseExample(statusCode: 200, typeof(PatioResponseSample))]
         [EnableRateLimiting("ratelimit")]
+        [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _patioUseCase.GetPatioByIdAsync(id);
@@ -101,6 +104,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 201, description: "Pátio criado com sucesso", type: typeof(PatioEntity))]
         [SwaggerResponse(statusCode: 400, description: "Dados inválidos")]
         [SwaggerResponseExample(statusCode: 201, typeof(PatioResponseSample))]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Post([FromBody] PatioDto patioDto)
         {
             var result = await _patioUseCase.CreatePatioAsync(patioDto);
@@ -122,6 +126,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 200, description: "Pátio atualizado com sucesso", type: typeof(PatioEntity))]
         [SwaggerResponse(statusCode: 404, description: "Pátio não encontrado")]
         [SwaggerResponseExample(statusCode: 200, typeof(PatioResponseSample))]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Put(int id, [FromBody] PatioDto patioDto)
         {
             var result = await _patioUseCase.UpdatePatioAsync(id, patioDto);
@@ -142,6 +147,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 200, description: "Pátio excluído com sucesso", type: typeof(PatioEntity))]
         [SwaggerResponse(statusCode: 404, description: "Pátio não encontrado")]
         [SwaggerResponseExample(statusCode: 200, typeof(PatioResponseSample))]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _patioUseCase.DeletePatioAsync(id);

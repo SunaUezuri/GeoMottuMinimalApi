@@ -3,6 +3,7 @@ using GeoMottuMinimalApi.Application.Interfaces;
 using GeoMottuMinimalApi.Doc.Samples.Moto;
 using GeoMottuMinimalApi.Domain.Entities;
 using GeoMottuMinimalApi.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Swashbuckle.AspNetCore.Annotations;
@@ -30,6 +31,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 204, description: "Nenhuma moto encontrada")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseListSample))]
         [EnableRateLimiting("ratelimit")]
+        [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> Get(int offSet = 0, int take = 3)
         {
             var result = await _motoUseCase.GetAllMotosAsync(offSet, take);
@@ -86,6 +88,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 404, description: "Moto não encontrada")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseSample))]
         [EnableRateLimiting("ratelimit")]
+        [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _motoUseCase.GetMotoByIdAsync(id);
@@ -107,6 +110,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 404, description: "Moto não encontrada")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseSample))]
         [EnableRateLimiting("ratelimit")]
+        [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> GetByPlaca(string placa)
         {
             var result = await _motoUseCase.GetByPlacaAsync(placa);
@@ -128,6 +132,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 404, description: "Moto não encontrada")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseSample))]
         [EnableRateLimiting("ratelimit")]
+        [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> GetByChassi(string chassi)
         {
             var result = await _motoUseCase.GetByChassiAsync(chassi);
@@ -149,6 +154,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 204, description: "Nenhuma moto encontrada para o modelo")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseListSample))]
         [EnableRateLimiting("ratelimit")]
+        [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> GetByModelo(ModeloMoto modelo, int offSet = 0, int take = 3)
         {
             var result = await _motoUseCase.GetByModeloAsync(modelo, offSet, take);
@@ -199,6 +205,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 400, description: "Dados inválidos ou pátio lotado")]
         [SwaggerResponse(statusCode: 404, description: "Pátio não encontrado")]
         [SwaggerResponseExample(statusCode: 201, typeof(MotoResponseSample))]
+        [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> Post(MotoDto motoDto)
         {
             var result = await _motoUseCase.CreateMotoAsync(motoDto);
@@ -220,6 +227,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 200, description: "Moto atualizada com sucesso", type: typeof(MotoEntity))]
         [SwaggerResponse(statusCode: 404, description: "Moto ou Pátio não encontrado")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseSample))]
+        [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> Put(int id, MotoDto motoDto)
         {
             var result = await _motoUseCase.UpdateMotoAsync(id, motoDto);
@@ -240,6 +248,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 200, description: "Moto excluída com sucesso", type: typeof(MotoEntity))]
         [SwaggerResponse(statusCode: 404, description: "Moto não encontrada")]
         [SwaggerResponseExample(statusCode: 200, typeof(MotoResponseSample))]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _motoUseCase.DeleteMotoAsync(id);

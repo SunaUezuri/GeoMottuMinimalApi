@@ -1,6 +1,7 @@
 ﻿using GeoMottuMinimalApi.Application.Dtos;
 using GeoMottuMinimalApi.Application.Interfaces;
 using GeoMottuMinimalApi.Doc.Samples.Usuario;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
@@ -34,6 +35,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 204, description: "Nenhum usuário encontrado")]
         [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseListSample))]
         [EnableRateLimiting("ratelimit")]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(int offSet = 0, int take = 3)
         {
             var result = await _usuarioUseCase.GetAllUsuariosAsync(offSet, take);
@@ -52,6 +54,7 @@ namespace GeoMottuMinimalApi.Controllers
                     usuario.Email,
                     usuario.FilialId,
                     usuario.Senha,
+                    usuario.Role,
                     usuario.CadastradoEm,
                     links = new object[]
                     {
@@ -77,11 +80,12 @@ namespace GeoMottuMinimalApi.Controllers
         }
 
         [HttpGet("list/{id}")]
-        [SwaggerOperation(Summary = "Obtém um usuário por ID")]
+        [SwaggerOperation(Summary = "Obtém um usuário por ID", Description = "Busca um usuário no banco de dados a partir do ID")]
         [SwaggerResponse(statusCode: 200, description: "Usuário encontrado")]
         [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
         [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
         [EnableRateLimiting("ratelimit")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _usuarioUseCase.GetUsuarioByIdAsync(id);
@@ -95,11 +99,12 @@ namespace GeoMottuMinimalApi.Controllers
         }
 
         [HttpGet("email/{email}")]
-        [SwaggerOperation(Summary = "Obtém um usuário por E-mail")]
+        [SwaggerOperation(Summary = "Obtém um usuário por E-mail", Description = "Busca um usuário levando em conta o Email dele")]
         [SwaggerResponse(statusCode: 200, description: "Usuário encontrado")]
         [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
         [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
         [EnableRateLimiting("ratelimit")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> GetByEmail(string email)
         {
             var result = await _usuarioUseCase.GetUsuarioByEmailAsync(email);
@@ -113,11 +118,12 @@ namespace GeoMottuMinimalApi.Controllers
         }
 
         [HttpPost("create")]
-        [SwaggerOperation(Summary = "Cria um novo usuário")]
+        [SwaggerOperation(Summary = "Cria um novo usuário", Description = "Método de cadastro de usuários para o banco de dados")]
         [SwaggerRequestExample(typeof(UsuarioDto), typeof(UsuarioRequestSample))]
         [SwaggerResponse(statusCode: 201, description: "Usuário criado com sucesso")]
         [SwaggerResponse(statusCode: 400, description: "Dados inválidos")]
         [SwaggerResponseExample(statusCode: 201, typeof(UsuarioResponseSample))]
+        [AllowAnonymous]
         public async Task<IActionResult> Post([FromBody] UsuarioDto usuarioDto)
         {
             var result = await _usuarioUseCase.CreateUsuarioAsync(usuarioDto);
@@ -132,10 +138,10 @@ namespace GeoMottuMinimalApi.Controllers
 
         [HttpPost("auth")]
         [SwaggerOperation(Summary = "Autenticação de Usuário", Description = "Método para autenticação e criação de Token JWT")]
-        // [SwaggerRequestExample(typeof(UsuarioDto), typeof(UsuarioRequestSample))]
+        [SwaggerRequestExample(typeof(AuthUserDto), typeof(AuthUserRequestSample))]
         [SwaggerResponse(statusCode: 201, description: "Autenticado com sucesso")]
         [SwaggerResponse(statusCode: 400, description: "Dados inválidos")]
-        // [SwaggerResponseExample(statusCode: 201, typeof(UsuarioResponseSample))]
+        [AllowAnonymous]
         public async Task<IActionResult> Auth(AuthUserDto dto)
         {
             var result = await _usuarioUseCase.AutenticarUserAsync(dto);
@@ -176,6 +182,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 200, description: "Usuário atualizado com sucesso")]
         [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
         [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Put(int id, [FromBody] UsuarioUpdateDto usuarioDto)
         {
             var result = await _usuarioUseCase.UpdateUsuarioAsync(id, usuarioDto);
@@ -193,6 +200,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 200, description: "Usuário excluído com sucesso")]
         [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
         [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _usuarioUseCase.DeleteUsuarioAsync(id);

@@ -2,6 +2,7 @@
 using GeoMottuMinimalApi.Application.Interfaces;
 using GeoMottuMinimalApi.Doc.Samples.Filial;
 using GeoMottuMinimalApi.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Swashbuckle.AspNetCore.Annotations;
@@ -29,6 +30,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 204, description: "Nenhuma filial encontrada")]
         [SwaggerResponseExample(statusCode: 200, typeof(FilialResponseListSample))]
         [EnableRateLimiting("ratelimit")]
+        [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> Get(int offSet = 0, int take = 3)
         {
             var result = await _filialUseCase.GetAllFiliaisAsync(offSet, take);
@@ -79,6 +81,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 404, description: "Filial não encontrada")]
         [SwaggerResponseExample(statusCode: 200, typeof(FilialResponseSample))]
         [EnableRateLimiting("ratelimit")]
+        [Authorize(Roles = "USER, ADMIN")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _filialUseCase.GetFilialByIdAsync(id);
@@ -100,6 +103,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 201, description: "Filial criada com sucesso", type: typeof(FilialEntity))]
         [SwaggerResponse(statusCode: 400, description: "Dados inválidos")]
         [SwaggerResponseExample(statusCode: 201, typeof(FilialResponseSample))]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Post(FilialDto filialDto)
         {
             var result = await _filialUseCase.CreateFilialAsync(filialDto);
@@ -121,6 +125,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 200, description: "Filial atualizada com sucesso", type: typeof(FilialEntity))]
         [SwaggerResponse(statusCode: 404, description: "Filial não encontrada")]
         [SwaggerResponseExample(statusCode: 200, typeof(FilialResponseSample))]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Put(int id, [FromBody] FilialDto filialDto)
         {
             var result = await _filialUseCase.UpdateFilialAsync(id, filialDto);
@@ -141,6 +146,7 @@ namespace GeoMottuMinimalApi.Controllers
         [SwaggerResponse(statusCode: 200, description: "Filial excluída com sucesso", type: typeof(FilialEntity))]
         [SwaggerResponse(statusCode: 404, description: "Filial não encontrada")]
         [SwaggerResponseExample(statusCode: 200, typeof(FilialResponseSample))]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _filialUseCase.DeleteFilialAsync(id);
