@@ -61,7 +61,8 @@ namespace GeoMottuMinimalApi.Controllers
                     {
                         new { rel = "self", href = Url.Action(nameof(GetById), "Usuario", new { id = usuario.Id }, Request.Scheme) },
                         new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = usuario.Id }, Request.Scheme) },
-                        new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = usuario.Id }, Request.Scheme) }
+                        new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = usuario.Id }, Request.Scheme) },
+                        new { rel = "email", href = Url.Action(nameof(GetByEmail), "Usuario", new { email = usuario.Email }, Request.Scheme) }
                     }
                 }),
                 links = new object[]
@@ -107,6 +108,7 @@ namespace GeoMottuMinimalApi.Controllers
                     new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "email", href = Url.Action(nameof(GetByEmail), "Usuario", new { email = result.Value?.Email }, Request.Scheme) },
                     new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
                     new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
                 },
@@ -141,6 +143,7 @@ namespace GeoMottuMinimalApi.Controllers
                     new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "email", href = Url.Action(nameof(GetByEmail), "Usuario", new { email = result.Value?.Email }, Request.Scheme) },
                     new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
                     new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
                 },
@@ -175,6 +178,7 @@ namespace GeoMottuMinimalApi.Controllers
                     new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "email", href = Url.Action(nameof(GetByEmail), "Usuario", new { email = result.Value?.Email }, Request.Scheme) },
                     new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
                     new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
                 },
@@ -207,6 +211,7 @@ namespace GeoMottuMinimalApi.Controllers
                     new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "email", href = Url.Action(nameof(GetByEmail), "Usuario", new { email = result.Value?.Email }, Request.Scheme) },
                     new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
                     new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
                 },
@@ -263,6 +268,7 @@ namespace GeoMottuMinimalApi.Controllers
                     new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "email", href = Url.Action(nameof(GetByEmail), "Usuario", new { email = result.Value?.Email }, Request.Scheme) },
                     new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
                     new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
                 },
@@ -296,6 +302,7 @@ namespace GeoMottuMinimalApi.Controllers
                     new { rel = "update", href = Url.Action(nameof(Put), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "delete", href = Url.Action(nameof(Delete), "Usuario", new { id = result.Value?.Id }, Request.Scheme) },
                     new { rel = "self", href = Url.Action(nameof(Get), "Usuario", null, Request.Scheme) },
+                    new { rel = "email", href = Url.Action(nameof(GetByEmail), "Usuario", new { email = result.Value?.Email }, Request.Scheme) },
                     new { rel = "create", href = Url.Action(nameof(Post), "Usuario", null, Request.Scheme) },
                     new { rel = "auth", href = Url.Action(nameof(Auth), "Usuario", null, Request.Scheme) }
                 },

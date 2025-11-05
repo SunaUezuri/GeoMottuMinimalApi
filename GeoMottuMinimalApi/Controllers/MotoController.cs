@@ -61,8 +61,8 @@ namespace GeoMottuMinimalApi.Controllers
                         new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = moto.Id }, Request.Scheme) },
                         new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = moto.Id }, Request.Scheme) },
                         new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = moto.Placa }, Request.Scheme) },
-                        new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = moto.Chassi }, Request.Scheme) },
-                        new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = moto.Modelo }, Request.Scheme) }
+                        new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { chassi = moto.Chassi }, Request.Scheme) },
+                        new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { placa = moto.Modelo }, Request.Scheme) }
                     }
                 }),
                 links = new object[]
@@ -110,8 +110,8 @@ namespace GeoMottuMinimalApi.Controllers
                    new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
-                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
-                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { chassi = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { modelo = result.Value?.Modelo }, Request.Scheme) },
                    new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
                    new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
                 }
@@ -144,16 +144,16 @@ namespace GeoMottuMinimalApi.Controllers
             {
                 data = result.Value,
                 links = new object[]
-    {
+                {
                    new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
-                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
-                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { chassi = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { modelo = result.Value?.Modelo }, Request.Scheme) },
                    new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
                    new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
-    }
+                }
             };
 
             return StatusCode(result.StatusCode, hateoas);
@@ -183,16 +183,16 @@ namespace GeoMottuMinimalApi.Controllers
             {
                 data = result.Value,
                 links = new object[]
-    {
+                {
                    new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
-                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
-                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { chassi = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { modelo = result.Value?.Modelo }, Request.Scheme) },
                    new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
                    new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
-    }
+                }
             };
 
             return StatusCode(result.StatusCode, hateoas);
@@ -237,8 +237,8 @@ namespace GeoMottuMinimalApi.Controllers
                         new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = moto.Id }, Request.Scheme) },
                         new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = moto.Id }, Request.Scheme) },
                         new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = moto.Placa }, Request.Scheme) },
-                        new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = moto.Chassi }, Request.Scheme) },
-                        new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = moto.Modelo }, Request.Scheme) }
+                        new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { chassi = moto.Chassi }, Request.Scheme) },
+                        new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { modelo = moto.Modelo }, Request.Scheme) }
                     }
                 }),
                 links = new object[]
@@ -282,16 +282,16 @@ namespace GeoMottuMinimalApi.Controllers
             {
                 data = result.Value,
                 links = new object[]
-    {
+                {
                    new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
-                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
-                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { chassi = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { modelo = result.Value?.Modelo }, Request.Scheme) },
                    new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
                    new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
-    }
+                }
             };
 
             return StatusCode(result.StatusCode, hateoas);
@@ -321,16 +321,16 @@ namespace GeoMottuMinimalApi.Controllers
             {
                 data = result.Value,
                 links = new object[]
-    {
+                {
                    new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
-                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
-                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { chassi = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { modelo = result.Value?.Modelo }, Request.Scheme) },
                    new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
                    new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
-    }
+                }
             };
 
             return StatusCode(result.StatusCode, hateoas);
@@ -359,16 +359,16 @@ namespace GeoMottuMinimalApi.Controllers
             {
                 data = result.Value,
                 links = new object[]
-    {
+                {
                    new { rel = "self", href = Url.Action(nameof(GetById), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "update", href = Url.Action(nameof(Put), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "delete", href = Url.Action(nameof(Delete), "Moto", new { id = result.Value?.Id }, Request.Scheme) },
                    new { rel = "placa", href = Url.Action(nameof(GetByPlaca), "Moto", new { placa = result.Value?.Placa }, Request.Scheme) },
-                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { id = result.Value?.Chassi }, Request.Scheme) },
-                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { id = result.Value?.Modelo }, Request.Scheme) },
+                   new { rel = "chassi", href = Url.Action(nameof(GetByChassi), "Moto", new { chassi = result.Value?.Chassi }, Request.Scheme) },
+                   new { rel = "modelo", href = Url.Action(nameof(GetByModelo), "Moto", new { modelo = result.Value?.Modelo }, Request.Scheme) },
                    new { rel = "self", href = Url.Action(nameof(Get), "Moto", null, Request.Scheme) },
                    new { rel = "create", href = Url.Action(nameof(Post), "Moto", null, Request.Scheme) }
-    }
+                }
             };
 
             return StatusCode(result.StatusCode, hateoas);
