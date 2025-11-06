@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoMottuMinimalApi.Infra.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoMottuMinimalApi.Infra.IoC", "GeoMottuMinimalApi.Infra.IoC\GeoMottuMinimalApi.Infra.IoC.csproj", "{2AFC7E44-4BE2-4006-A65F-D7773EE8D85D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeoMottuMinimalApi.Tests", "GeoMottuMinimalApi.Tests\GeoMottuMinimalApi.Tests.csproj", "{37D9CF2D-ED0F-49EF-B26D-331001E945EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{2AFC7E44-4BE2-4006-A65F-D7773EE8D85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AFC7E44-4BE2-4006-A65F-D7773EE8D85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AFC7E44-4BE2-4006-A65F-D7773EE8D85D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37D9CF2D-ED0F-49EF-B26D-331001E945EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37D9CF2D-ED0F-49EF-B26D-331001E945EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37D9CF2D-ED0F-49EF-B26D-331001E945EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37D9CF2D-ED0F-49EF-B26D-331001E945EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{8AD5CB03-2EB1-486B-A7DC-AB1BE5437E61} = {8B846376-372D-4DAF-9745-C178BD8386F6}
 		{499CDDE1-4F1B-4776-8FEC-57D81154C6F2} = {DCDA917A-444B-42AD-B9CB-43818224AFC3}
 		{2AFC7E44-4BE2-4006-A65F-D7773EE8D85D} = {DCDA917A-444B-42AD-B9CB-43818224AFC3}
+		{37D9CF2D-ED0F-49EF-B26D-331001E945EC} = {E261881A-FA40-44C7-A5B3-AA4F672773C8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {91FFA4A2-AAD9-49A1-B9D6-CA594AED7F77}
