@@ -41,6 +41,8 @@ namespace GeoMottuMinimalApi.Tests.Infrastructure.Repository
             };
         }
 
+        /* Tests */
+
         [Fact(DisplayName = "CreateUsuarioAsync deve salvar e retornar o usuário com Id")]
         [Trait("Repository", "Usuario")]
         public async Task CreateUsuarioAsyncDeveAdicionarEretornarUsuario()

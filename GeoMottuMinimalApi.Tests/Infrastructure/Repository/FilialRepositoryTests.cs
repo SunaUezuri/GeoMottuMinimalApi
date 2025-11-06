@@ -25,6 +25,8 @@ namespace GeoMottuMinimalApi.Tests.Infrastructure.Repository
             };
         }
 
+        /* Tests */
+
         [Fact(DisplayName = "CreateFilialAsync deve salvar e retornar a filial com Id")]
         [Trait("Repository", "Filial")]
         public async Task CreateFilialAsyncDeveAdicionarEretornarFilial()
