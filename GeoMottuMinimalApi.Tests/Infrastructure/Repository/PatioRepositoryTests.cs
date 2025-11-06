@@ -2,7 +2,7 @@
 using GeoMottuMinimalApi.Domain.Enums;
 using GeoMottuMinimalApi.Infrastructure.Data.Repositories;
 
-namespace GeoMottuMinimalApi.Tests.Infrastructure.Repositories
+namespace GeoMottuMinimalApi.Tests.Infrastructure.Repository
 {
     public class PatioRepositoryTests : BaseRepositoryTests
     {
