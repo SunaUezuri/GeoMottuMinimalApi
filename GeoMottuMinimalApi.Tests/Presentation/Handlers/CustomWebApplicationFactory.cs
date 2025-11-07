@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Moq;
@@ -43,6 +44,18 @@ namespace GeoMottuMinimalApi.Tests.Presentation.Handlers
                 })
                 .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>(
                     TestAuthHandler.Scheme, _ => { });
+
+                var testConfig = new Dictionary<string, string>
+                {
+                    ["SecretKey"] = "ESTA_EH_UMA_CHAVE_SECRETA_DE_TESTE_SUPER_LONGA_12345"
+                };
+
+                var config = new ConfigurationBuilder()
+                    .AddInMemoryCollection(testConfig)
+                    .Build();
+
+                services.RemoveAll(typeof(IConfiguration));
+                services.AddSingleton<IConfiguration>(config);
             });
         }
     }

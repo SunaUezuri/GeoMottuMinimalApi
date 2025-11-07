@@ -44,7 +44,7 @@ namespace GeoMottuMinimalApi.Tests.Presentation.Controller
 
         [Fact(DisplayName = "GET /list deve retornar 200 OK com dados")]
         [Trait("Controller", "Filial")]
-        public async Task Get_DeveRetornar200QuandoHaFiliais()
+        public async Task GetDeveRetornar200QuandoHaFiliais()
         {
             var listaFiliais = new List<FilialEntity> { CriarFilialValida(1) };
             var pageResult = new PageResultModel<IEnumerable<FilialEntity>>
@@ -71,7 +71,7 @@ namespace GeoMottuMinimalApi.Tests.Presentation.Controller
 
         [Fact(DisplayName = "GET /list deve retornar 204 NoContent quando UseCase falha")]
         [Trait("Controller", "Filial")]
-        public async Task Get_DeveRetornar204QuandoUseCaseFalhaComNoContent()
+        public async Task GetDeveRetornar204QuandoUseCaseFalhaComNoContent()
         {
             var failureResult = OperationResult<PageResultModel<IEnumerable<FilialEntity>>>
                 .Failure("Nenhuma filial encontrada", (int)HttpStatusCode.NoContent);

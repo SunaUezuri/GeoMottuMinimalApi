@@ -188,7 +188,7 @@ namespace GeoMottuMinimalApi.Controllers
                 },
             };
 
-            return StatusCode(result.StatusCode, result);
+            return StatusCode(result.StatusCode, hateoas);
         }
 
         [HttpPost("auth")]
