@@ -186,6 +186,7 @@ erDiagram
         string Nome
         string Email
         string Senha
+        string Role
         int FilialId FK "ID da Filial"
     }
 
