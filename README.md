@@ -30,79 +30,134 @@
 
 ---
 
-## 🧭 Índice
+## **🧭 Índice**
 
-1.  [**🎯 Sobre o Projeto**](#-sobre-o-projeto)
-2.  [**✨ Funcionalidades Principais**](#-funcionalidades-principais)
-3.  [**🏗️ Filosofia de Arquitetura**](#️-filosofia-de-arquitetura)
-    -   [Decisões de Arquitetura](#-decisões-de-arquitetura)
-4.  [**🛠️ Tech Stack**](#️-tech-stack)
-5.  [**🗃️ Modelo de Dados**](#️-modelo-de-dados)
-6.  [**🐳 Docker**](#-docker)
-7.  [**🚀 Como Executar**](#-como-executar)
-8. [**📖 Guia da API**](#-guia-da-api)
-9. [**🔗Deploy No Render**](#-deploy-no-render)
+1. [**🎯 Sobre o Projeto**](https://www.google.com/search?q=%23-sobre-o-projeto)  
+2. [**✨ Funcionalidades Principais**](https://www.google.com/search?q=%23-funcionalidades-principais)  
+3. [**🤖 Funcionalidade de Machine Learning (ML.NET)**](https://www.google.com/search?q=%23-funcionalidade-de-machine-learning-mlnet)  
+4. [**🏗️ Filosofia de Arquitetura**](https://www.google.com/search?q=%23%EF%B8%8F-filosofia-de-arquitetura)  
+   * [Estrutura da Solução](https://www.google.com/search?q=%23estrutura-da-solu%C3%A7%C3%A3o)  
+   * [Decisões de Arquitetura](https://www.google.com/search?q=%23-decis%C3%B5es-de-arquitetura)  
+5. [**🛠️ Tech Stack**](https://www.google.com/search?q=%23%EF%B8%8F-tech-stack)  
+6. [**🗃️ Modelo de Dados**](https://www.google.com/search?q=%23%EF%B8%8F-modelo-de-dados)  
+7. [**🚀 Como Executar (Localmente)**](https://www.google.com/search?q=%23-como-executar-localmente)  
+   * [Script de População de Dados (Obrigatório para ML)](https://www.google.com/search?q=%23-script-de-popula%C3%A7%C3%A3o-de-dados-obrigat%C3%B3rio-para-ml)  
+8. [**🧪 Como Rodar os Testes**](https://www.google.com/search?q=%23-como-rodar-os-testes)  
+9. [**📖 Guia da API (Endpoints)**](https://www.google.com/search?q=%23-guia-da-api-endpoints)  
+10. [**🔗 Deploy (Render)**](https://www.google.com/search?q=%23-deploy-render)
 
+## **🎯 Sobre o Projeto**
 
----
+Esta API foi desenvolvida como uma solução robusta e escalável para o gerenciamento de frotas da **Mottu**. O sistema centraliza o controle de **Motos**, **Pátios** de estacionamento e **Filiais**, resolvendo o desafio de administrar uma frota distribuída geograficamente. Através de uma interface RESTful bem definida, a plataforma permite que sistemas clientes (aplicativos móveis, dashboards web, etc.) realizem operações críticas como cadastrar novas motos, alocá-las em pátios específicos e administrar a capacidade logística de cada filial em tempo real.
 
-## 🎯 Sobre o Projeto
+O grande diferencial é a inclusão de um módulo de **Inteligência Artificial (ML.NET)** para analisar a geolocalização de toda a frota e agrupá-la (clusterizar) automaticamente, permitindo uma tomada de decisão logística mais inteligente.
 
-> Esta API foi desenvolvida como uma solução robusta e escalável para o gerenciamento de frotas da **Mottu**. O sistema centraliza o controle de **Motos**, **Pátios** de estacionamento e **Filiais**, resolvendo o desafio de administrar uma frota distribuída geograficamente. Através de uma interface RESTful bem definida, a plataforma permite que sistemas clientes (aplicativos móveis, dashboards web, etc.) realizem operações críticas como cadastrar novas motos, alocá-las em pátios específicos e administrar a capacidade logística de cada filial em tempo real.
+## **✨ Funcionalidades Principais**
 
----
+* ✔️ **Gestão de Entidades Core**: CRUD completo para Filiais, Pátios, Motos e Usuários.  
+* ✔️ **Autenticação e Autorização**: Sistema seguro baseado em **JWT** com autorização granular baseada em **Roles** (USER / ADMIN).  
+* ✔️ **Machine Learning (ML.NET)**: Treinamento e predição de clusterização geoespacial (K-Means) para a frota de motos.  
+* ✔️ **Lógica de Negócio Complexa**: Validação em tempo real que impede a alocação de uma moto em um pátio que já atingiu sua capacidade máxima (na criação e atualização).  
+* ✔️ **Buscas Avançadas**: Consultas de motos por placa ou chassi únicos (case-insensitive).  
+* ✔️ **Paginação Eficiente**: Todas as rotas de listagem (GET) incluem paginação com offSet e take para otimizar a performance.  
+* ✔️ **API Autodescoberta (HATEOAS)**: As respostas das coleções incluem links para ações relacionadas (self, create, update, delete), permitindo que os clientes naveguem pela API de forma dinâmica.  
+* ✔️ **Documentação OpenAPI (Swagger)**: A API é 100% autodocumentada e interativa, com exemplos claros de Request e Response para cada endpoint.  
+* ✔️ **Cobertura de Testes Completa**: Mais de **60 testes unitários e de integração** cobrindo todas as camadas da arquitetura.  
+* ✔️ **Mecanismos de Defesa**:  
+  * **Rate Limiting**: Proteção contra abuso, limitando as requisições a 20 por minuto.  
+* ✔️ **Otimização de Performance**:  
+  * **Compressão de Resposta (Brotli/Gzip)**: Reduz o tamanho dos payloads JSON, acelerando o tempo de resposta.  
+* ✔️ **Monitoramento de Saúde**: Endpoints \[AllowAnonymous\] de *Health Check* (/api/Health/live e /api/Health/ready) que verificam a saúde da API e do banco de dados Oracle.
 
-## ✨ Funcionalidades Principais
+## **🤖 Funcionalidade de Machine Learning (ML.NET)**
 
--   ✔️ **Gestão de Entidades Core**: CRUD completo para Filiais, Pátios, Motos e Usuários.
--   ✔️ **Buscas Avançadas**: Consultas de motos por placa ou chassi únicos, garantindo a integridade dos dados.
--   ✔️ **Controle de Capacidade**: Lógica de negócio que impede a alocação de uma moto em um pátio que já atingiu sua capacidade máxima.
--   ✔️ **Paginação Eficiente**: Todas as rotas de listagem (`GET`) incluem paginação com `offSet` e `take` para otimizar a transferência de dados e a performance do cliente.
--   ✔️ **API Autodescoberta com HATEOAS**: As respostas das coleções incluem links para ações relacionadas (self, create, update, delete), permitindo que os clientes naveguem pela API de forma dinâmica.
--   ✔️ **Documentação OpenAPI (Swagger)**: A API é 100% autodocumentada e interativa, com exemplos claros de requisições e respostas para cada endpoint.
--   ✔️ **Mecanismos de Defesa**:
-    -   **Rate Limiting**: Proteção contra abuso e ataques de força bruta, limitando as requisições a 20 por minuto por cliente.
--   ✔️ **Otimização de Performance**:
-    -   **Compressão de Resposta (Brotli/Gzip)**: Reduz drasticamente o tamanho dos payloads JSON, economizando banda e acelerando o tempo de resposta em redes lentas.
+O ClusterizacaoMotosController expõe a funcionalidade de IA do projeto, permitindo análises geoespaciais sobre a frota.
 
----
+### **1\. Treinamento do Modelo**
 
-## 🏗️ Filosofia de Arquitetura
+Este endpoint é responsável por criar o modelo de clusterização.
+
+* **Endpoint:** GET /api/ClusterizacaoMotos/Treinar  
+* **Autorização:** ADMIN  
+* **O que faz:**  
+  1. Busca a geolocalização (PosicaoX, PosicaoY) de **todas** as motos no banco de dados. (É por isso que a execução do popula\_banco.sql é crucial).  
+  2. Usa o algoritmo **K-Means** do ML.NET para encontrar 4 "clusters" (agrupamentos) geográficos.  
+  3. Salva o modelo treinado no servidor, no arquivo Treinamento/ModeloClusterMotos.zip.
+
+### **2\. Predição de Cluster**
+
+Este endpoint usa o modelo treinado para classificar uma nova coordenada.
+
+* **Endpoint:** GET /api/ClusterizacaoMotos/PreverCluster  
+* **Autorização:** USER, ADMIN  
+* **Parâmetros (Query):**  
+  * posX (ex: \-46.63)  
+  * posY (ex: \-23.55)  
+* **O que faz:**  
+  1. Carrega o arquivo ModeloClusterMotos.zip (se ele não existir, retorna um erro 400 \- "treine o modelo primeiro").  
+  2. Prevê a qual cluster (ID de 0 a 3\) a nova coordenada pertence.  
+* **Resposta (Exemplo):**  
+  ```
+  {  
+    "data": {  
+      "localizacaoEntrada": {  
+        "posicaoX": \-46.63,  
+        "posicaoY": \-23.55  
+      },  
+      "clusterPrevisto": 2,  
+      "distancias": \[ 150.2, 80.5, 5.2, 210.9 \]  
+    }  
+  }
+  ```
+
+## **🏗️ Filosofia de Arquitetura**
 
 O projeto foi estruturado seguindo os princípios da **Clean Architecture**, visando a separação de responsabilidades, alta coesão, baixo acoplamento e testabilidade.
 
 O fluxo de uma requisição segue um caminho claro através das camadas:
 
-`Presentation` ➡️ `Application` ➡️ `Domain` ⬅️ `Infrastructure`
+Presentation ➡️ Application ➡️ Domain ⬅️ Infrastructure
 
-1.  **Presentation (Controllers)**: Recebe a requisição HTTP, valida os dados de entrada e invoca o caso de uso apropriado.
-2.  **Application (UseCases)**: Orquestra a execução da regra de negócio. Ele não contém lógica de negócio em si, mas coordena os repositórios e entidades para realizar uma operação.
-3.  **Domain (Entities & Interfaces)**: O coração da aplicação. Contém as entidades de negócio e as abstrações (interfaces) para a persistência de dados. Esta camada não depende de nenhuma outra.
-4.  **Infrastructure (Repositories & DbContext)**: Implementa as interfaces de repositório definidas no Domain, utilizando o Entity Framework Core para se comunicar com o banco de dados Oracle.
+1. **Presentation (API / Controllers)**: Recebe a requisição HTTP, valida os DTOs e invoca o caso de uso apropriado. É a única camada que conhece o "mundo exterior".  
+2. **Application (UseCases)**: Orquestra a execução da regra de negócio. Ele não contém lógica de negócio em si (ex: if (contagem \>= capacidade)), mas coordena os repositórios para realizar uma operação.  
+3. **Domain (Entities & Interfaces)**: O coração da aplicação. Contém as Entidades de negócio (com suas validações) e as abstrações (interfaces) para a persistência de dados. Esta camada não depende de nenhuma outra.  
+4. **Infrastructure (Repositories & DbContext)**: Implementa as interfaces de repositório definidas no Domain, utilizando o Entity Framework Core para se comunicar com o banco de dados Oracle.
 
-### 🧠 Decisões de Arquitetura
+### **Estrutura da Solução**
 
--   **Wrapper `OperationResult<T>`**: Todas as respostas dos UseCases são encapsuladas em um objeto `OperationResult`. Isso padroniza o tratamento de sucesso e erro em toda a API, retornando um status code HTTP consistente e mensagens de erro claras, simplificando a lógica no cliente.
--   **Injeção de Dependência Nativa**: O projeto utiliza extensivamente o sistema de injeção de dependência do ASP.NET Core para gerenciar o ciclo de vida dos serviços, repositórios e do DbContext, promovendo um código desacoplado e fácil de testar.
--   **Migrations Automáticas na Inicialização**: Para simplificar o deploy em ambientes de desenvolvimento e teste, a aplicação aplica automaticamente as migrations pendentes do EF Core ao iniciar. *Em um ambiente de produção complexo, essa estratégia seria substituída por um passo explícito no pipeline de CI/CD.*
--   **Mapeamento de Enums para String**: No `DbContext`, os enums (`ModeloMoto`, `TipoPatio`) são persistidos como strings no banco de dados. Isso aumenta a legibilidade dos dados diretamente no banco, facilitando a depuração e a criação de relatórios.
+A solução .sln é dividida em projetos que refletem essa arquitetura:
 
----
+* **GeoMottuMinimalApi.Domain**: Camada de Domínio (Entidades, Enums, Interfaces de Repositório).  
+* **GeoMottuMinimalApi.Application**: Camada de Aplicação (UseCases, DTOs, Mappers, Interfaces de UseCase).  
+* **GeoMottuMinimalApi.Infra.Data**: Camada de Infraestrutura (DbContext, Repositórios EF Core, Migrações, Health Checks).  
+* **GeoMottuMinimalApi.Infra.IoC**: Camada de Inversão de Controle (Classe Bootstrap para Injeção de Dependência).  
+* **GeoMottuMinimalApi (API)**: Camada de Apresentação (Controllers, Program.cs, Dockerfile).  
+* **GeoMottuMinimalApi.Tests**: Projeto de Testes (Testes de Unidade, Integração e Funcionais).
 
-## 🛠️ Tech Stack
+### **🧠 Decisões de Arquitetura**
 
--   🌐 **Framework**: .NET 8
--   🗄️ **ORM**: Entity Framework Core 8
--   🐘 **Banco de Dados**: Oracle
--   📖 **Documentação**: Swashbuckle.AspNetCore 6.6.2 (Swagger)
--   📦 **Gerenciador de Pacotes**: NuGet
--   🐳 **Containerização**: Docker
+* **Wrapper OperationResult\<T\>**: Todas as respostas dos UseCases são encapsuladas em um objeto OperationResult. Isso padroniza o tratamento de sucesso e falha em toda a API, retornando um status code HTTP consistente e mensagens de erro claras, simplificando a lógica nos Controllers e nos clientes.  
+* **Injeção de Dependência (IoC)**: O projeto Infra.IoC centraliza todo o registro de dependências, mantendo o Program.cs da API limpo e focado apenas na configuração do pipeline HTTP.  
+* **Mapeamento de Enums para String**: No DbContext (OnModelCreating), os enums (ModeloMoto, TipoPatio, PaisFilial) são persistidos como strings no banco de dados. Isso aumenta a legibilidade dos dados diretamente no Oracle, facilitando a depuração e a criação de relatórios.
 
----
+## **🛠️ Tech Stack**
 
-## 🗃️ Modelo de Dados
+* 🌐 **Framework**: .NET 8 (ASP.NET Core)  
+* 🗄️ **ORM**: Entity Framework Core 8  
+* 🐘 **Banco de Dados**: Oracle (Oracle.EntityFrameworkCore)  
+* 🤖 **Machine Learning**: ML.NET (Microsoft.ML)  
+* 🔐 **Autenticação**: JWT Bearer (Microsoft.AspNetCore.Authentication.JwtBearer)  
+* 📖 **Documentação**: Swashbuckle (Swashbuckle.AspNetCore.Annotations, Filters)  
+* 🐳 **Containerização**: Docker  
+* 🧪 **Testes**:  
+  * **xUnit**: Framework de Teste  
+  * **Moq**: Mocking de dependências  
+  * **Microsoft.AspNetCore.Mvc.Testing**: Testes Funcionais/Integração da API  
+  * **SQLite (in-memory)**: Testes de Repositório
 
-As entidades são relacionadas para espelhar a estrutura operacional da Mottu. A relação principal é que uma `Filial` gerencia múltiplos `Pátios`, e cada `Pátio` abriga múltiplas `Motos`.
+## **🗃️ Modelo de Dados**
+
+As entidades são relacionadas para espelhar a estrutura operacional. A relação principal é que uma Filial gerencia múltiplos Pátios e Usuários, e cada Pátio abriga múltiplas Motos.
 
 ```mermaid
 erDiagram
@@ -145,138 +200,133 @@ erDiagram
     }
 ```
 
----
+## **🚀 Como Executar (Localmente)**
 
-## 🐳 Docker
+Siga os passos abaixo para configurar e executar o ambiente de desenvolvimento.
 
-Para facilitar a portabilidade e garantir um ambiente de execução consistente, o projeto está pronto para ser containerizado. Abaixo um `Dockerfile` de exemplo que utiliza **multi-stage builds** para criar uma imagem otimizada e segura para produção.
+### **1\. Pré-requisitos**
 
-```Dockerfile
-# Estágio 1: Build da aplicação
-FROM [mcr.microsoft.com/dotnet/sdk:8.0](https://mcr.microsoft.com/dotnet/sdk:8.0) AS build
-WORKDIR /src
+* [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)  
+* Um servidor de Banco de Dados **Oracle** acessível.  
+* Uma ferramenta de gerenciamento de banco (ex: SQL Developer, DBeaver).
 
-# Copia os arquivos de projeto e restaura as dependências
-COPY ["GeoMottuMinimalApi/GeoMottuMinimalApi.csproj", "GeoMottuMinimalApi/"]
-COPY ["GeoMottuMinimalApi.sln", "."]
-RUN dotnet restore "GeoMottuMinimalApi.sln"
-
-# Copia o restante do código e publica a aplicação
-COPY . .
-WORKDIR "/src/GeoMottuMinimalApi"
-RUN dotnet publish "GeoMottuMinimalApi.csproj" -c Release -o /app/publish
-
-# Estágio 2: Imagem final de produção
-FROM [mcr.microsoft.com/dotnet/aspnet:8.0](https://mcr.microsoft.com/dotnet/aspnet:8.0) AS final
-WORKDIR /app
-COPY --from=build /app/publish .
-
-# Expõe a porta que a aplicação vai usar
-EXPOSE 8080
-
-# Define a variável de ambiente para a porta (importante para Render/Azure)
-ENV ASPNETCORE_URLS=http://+:8080
-
-# Ponto de entrada para executar a aplicação
-ENTRYPOINT ["dotnet", "GeoMottuMinimalApi.dll"]
-```
-
----
-
-## 🚀 Como Executar
-
-Siga os passos abaixo para configurar e executar o ambiente de desenvolvimento local.
-
-### 1. Pré-requisitos
-
--   Instalação do **[.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)**.
--   Acesso a uma instância de banco de dados **Oracle**.
--   **(Opcional)** [Docker Desktop](https://www.docker.com/products/docker-desktop/) para execução em container.
-
-### 2. Clonar o Repositório
-
+### **2\. Clonar o Repositório**
 ```bash
-git clone <URL_DO_SEU_REPOSITORIO>
-cd GeoMottuMinimalApi
+  git clone https://\[URL\_DO\_SEU\_REPOSITORIO\]/GeoMottuMinimalApi.git  
+  cd GeoMottuMinimalApi
 ```
 
-### 3. Configurar a Conexão com o Banco
+### **3\. Configurar o Banco de Dados (Oracle)**
 
-Edite o arquivo `GeoMottuMinimalApi/appsettings.Development.json` e insira as credenciais do seu banco de dados Oracle na `ConnectionString`:
+1. **ConnectionString:** Abra o arquivo GeoMottuMinimalApi/appsettings.Development.json.  
+2. Localize a seção ConnectionStrings:Oracle.  
+3. Atualize a string de conexão com seu User Id e Password do Oracle.
+```
+   "ConnectionStrings": {  
+     "Oracle": "Data Source=(...);User Id=\[SEU\_USUARIO\];Password=\[SUA\_SENHA\];"  
+   },
+```
+4. **Aplicar Migrações:** Abra um terminal na pasta do projeto GeoMottuMinimalApi e execute o comando de migração do EF Core para criar todas as tabelas:
+```EMF
+   dotnet ef database update
+```
+### **4\. Configurar a Chave Secreta (JWT)**
 
-```json
-{
-  "ConnectionStrings": {
-    "Oracle": "Data Source=...;User Id=<SEU_USUARIO>;Password=<SUA_SENHA>;"
-  }
-}
+O appsettings.Development.json já contém uma Secretkey para desenvolvimento. Para produção, substitua-a por uma variável de ambiente ou use um cofre de segredos.
+
+### **5\. 📊 Script de População de Dados (Obrigatório para ML)**
+
+Para que o módulo de Machine Learning (/api/ClusterizacaoMotos/Treinar) funcione, ele precisa de uma grande massa de dados. O script popula\_banco.sql (localizado na raiz do projeto) foi criado para isso.
+
+**Como usar:**
+
+1. Garanta que as tabelas foram criadas (Passo 3 \- dotnet ef database update).  
+2. Abra o arquivo popula\_banco.sql na sua ferramenta de banco (SQL Developer, DBeaver).  
+3. Conecte-se ao seu banco de dados Oracle.  
+4. Execute o script. Ele é um bloco PL/SQL que criará 4 Filiais, 8 Usuários, 40 Pátios e 10.000 Motos com dados geográficos aleatórios.
+
+### **6\. Executar a Aplicação**
+
+Abra um terminal na pasta raiz da solução (.sln) e execute:
+
+```EMF
+  dotnet run \--project GeoMottuMinimalApi
 ```
 
-### 4. Instalar Dependências e Executar
+A API estará em execução. Você pode acessar a documentação do Swagger em:  
+http://localhost:5279/swagger
 
-O projeto já está pronto. Abra um terminal na pasta raiz (onde está o `.sln`) e execute:
+## **🧪 Como Rodar os Testes**
 
-```bash
-# Restaura os pacotes NuGet
-dotnet restore
+O projeto tem uma suíte de testes completa cobrindo todas as camadas.
 
-# Inicia a aplicação
-dotnet run --project GeoMottuMinimalApi
+1. Navegue até a pasta raiz da solução (.sln).  
+2. Execute o comando de teste do .NET:
+```
+   dotnet test
 ```
 
-### 5. Acessar a API
+4. Você verá o resultado de todos os testes (Domínio, Repositório, UseCase e API) sendo executados no seu terminal.
 
--   **URL Base da API**: `http://localhost:5279`
--   **Documentação Swagger**: `http://localhost:5279/swagger`
+## **📖 Guia da API (Endpoints)**
 
----
+Todos os endpoints (exceto os marcados como \[AllowAnonymous\]) exigem um Token JWT no header Authorization: Bearer \[TOKEN\].
 
-## 📖 Guia da API
+### **HealthController**
 
-A documentação interativa no Swagger é a fonte da verdade para todos os endpoints.
+| Método | Rota | Descrição | Autorização |
+| :---- | :---- | :---- | :---- |
+| GET | /api/Health/live | Verifica a saúde da API. | \[AllowAnonymous\] |
+| GET | /api/Health/ready | Verifica a saúde da API e do BD. | \[AllowAnonymous\] |
 
-### Endpoints de `Filial`
-| Método | Rota             | Descrição                 |
-| :----- | :--------------- | :------------------------ |
-| `GET`  | `/api/filial`    | Lista filiais (paginado).   |
-| `GET`  | `/api/filial/{id}`| Busca uma filial por ID.    |
-| `POST` | `/api/filial`    | Cria uma nova filial.       |
-| `PUT`  | `/api/filial/{id}`| Atualiza uma filial.        |
-| `DELETE`|`/api/filial/{id}`| Deleta uma filial.          |
+### **UsuarioController**
 
-### Endpoints de `Patio`
-| Método | Rota            | Descrição                |
-| :----- | :-------------- | :----------------------- |
-| `GET`  | `/api/patio`    | Lista pátios (paginado).   |
-| `GET`  | `/api/patio/{id}`| Busca um pátio por ID.     |
-| `POST` | `/api/patio`    | Cria um novo pátio.        |
-| `PUT`  | `/api/patio/{id}`| Atualiza um pátio.         |
-| `DELETE`|`/api/patio/{id}`| Deleta um pátio.           |
+| Método | Rota | Descrição | Autorização |
+| :---- | :---- | :---- | :---- |
+| POST | /api/Usuario/auth | Autentica um usuário e retorna um Token JWT. | \[AllowAnonymous\] |
+| POST | /api/Usuario/create | Cria um novo usuário (padrão USER). | \[AllowAnonymous\] |
+| GET | /api/Usuario/list | Lista todos os usuários (paginado). | \[AllowAnonymous\] |
+| GET | /api/Usuario/list/{id} | Busca um usuário por ID. | ADMIN |
+| GET | /api/Usuario/email/{email} | Busca um usuário por E-mail. | ADMIN |
+| PUT | /api/Usuario/update/{id} | Atualiza um usuário. | ADMIN |
+| DELETE | /api/Usuario/delete/{id} | Deleta um usuário. | ADMIN |
 
-### Endpoints de `Moto`
-| Método | Rota                      | Descrição                  |
-| :----- | :------------------------ | :------------------------- |
-| `GET`  | `/api/moto`               | Lista motos (paginado).      |
-| `GET`  | `/api/moto/{id}`          | Busca uma moto por ID.       |
-| `GET`  | `/api/moto/placa/{placa}` | Busca uma moto pela placa.   |
-| `GET`  | `/api/moto/chassi/{chassi}`| Busca uma moto pelo chassi.  |
-| `GET`  | `/api/moto/modelo/{modelo}`| Busca uma moto pelo modelo(paginado).  |
-| `POST` | `/api/moto`               | Cria uma nova moto.          |
-| `PUT`  | `/api/moto/{id}`          | Atualiza uma moto.           |
-| `DELETE`|`/api/moto/{id}`          | Deleta uma moto.             |
+### **FilialController**
 
-### Endpoints de `Usuario`
-| Método | Rota                   | Descrição                    |
-| :----- | :--------------------- | :--------------------------- |
-| `GET`  | `/api/usuario`         | Lista usuários (paginado).     |
-| `GET`  | `/api/usuario/{id}`    | Busca um usuário por ID.       |
-| `GET`  | `/api/usuario/email/{email}`| Busca um usuário por e-mail. |
-| `POST` | `/api/usuario`         | Cria um novo usuário.          |
-| `PUT`  | `/api/usuario/{id}`    | Atualiza um usuário.           |
-| `DELETE`|`/api/usuario/{id}`    | Deleta um usuário.             |
+| Método | Rota | Descrição | Autorização |
+| :---- | :---- | :---- | :---- |
+| GET | /api/Filial/list | Lista filiais (paginado). | USER, ADMIN |
+| GET | /api/Filial/list/{id} | Busca uma filial por ID. | USER, ADMIN |
+| POST | /api/Filial/create | Cria uma nova filial. | ADMIN |
+| PUT | /api/Filial/update/{id} | Atualiza uma filial. | ADMIN |
+| DELETE | /api/Filial/delete/{id} | Deleta uma filial. | ADMIN |
 
----
+### **PatioController**
 
-## 🔗Deploy no Render
+| Método | Rota | Descrição | Autorização |
+| :---- | :---- | :---- | :---- |
+| GET | /api/Patio/list | Lista pátios (paginado). | USER, ADMIN |
+| GET | /api/Patio/list/{id} | Busca um pátio por ID. | USER, ADMIN |
+| POST | /api/Patio/create | Cria um novo pátio. | ADMIN |
+| PUT | /api/Patio/update/{id} | Atualiza um pátio. | ADMIN |
+| DELETE | /api/Patio/delete/{id} | Deleta um pátio. | ADMIN |
 
-[![Deploy Online](https://img.shields.io/badge/🌍%20Abrir%20Aplicação-000?style=for-the-badge&logo=vercel)](https://geomottuminimalapi.onrender.com)  
+### **MotoController**
+
+| Método | Rota | Descrição | Autorização |
+| :---- | :---- | :---- | :---- |
+| GET | /api/Moto/list | Lista motos (paginado). | USER, ADMIN |
+| GET | /api/Moto/list/{id} | Busca uma moto por ID. | USER, ADMIN |
+| GET | /api/Moto/placa/{placa} | Busca uma moto pela placa. | USER, ADMIN |
+| GET | /api/Moto/chassi/{chassi} | Busca uma moto pelo chassi. | USER, ADMIN |
+| GET | /api/Moto/modelo/{modelo} | Lista motos por modelo (paginado). | USER, ADMIN |
+| POST | /api/Moto/create | Cria uma nova moto (valida capacidade). | USER, ADMIN |
+| PUT | /api/Moto/update/{id} | Atualiza uma moto (valida capacidade). | USER, ADMIN |
+| DELETE | /api/Moto/delete/{id} | Deleta uma moto. | ADMIN |
+
+### **ClusterizacaoMotosController (ML.NET)**
+
+| Método | Rota | Descrição | Autorização |
+| :---- | :---- | :---- | :---- |
+| GET | /api/ClusterizacaoMotos/Treinar | Treina o modelo K-Means. | ADMIN |
+| GET | /api/ClusterizacaoMotos/PreverCluster | Prevê o cluster de uma coordenada. | USER, ADMIN |
