@@ -23,8 +23,8 @@
 | Nome | RM |
 | :--- | :--- |
 | **Wesley Sena dos Santos** | 558043 |
-| **Vanessa Yukari Iwamoto** | 555130 |
-| **Samara Victoria Ferraz dos Santos** | 558092 |
+| **Vanessa Yukari Iwamoto** | 558092 |
+| **Samara Victoria Ferraz dos Santos** | 558719 |
 
 </div>
 
